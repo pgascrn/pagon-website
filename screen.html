@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo/logo-2.png">
+  <title>Product | PAGON</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="./assets/js/tailwind.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blackGlass: '#060607C9',
+            primary: '#4361EE',
+            cyanish: '#00B4D8',
+            mediumGray: '#999999'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #ffffff;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes fade-in-up {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes zoom-in {
+      0% {
+        transform: scale(1.05);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fade-in-up 0.8s ease-out both;
+    }
+
+    .animate-zoom-in {
+      animation: zoom-in 1s ease-out both;
+    }
+
+    .animate-fade-in {
+      animation: fade-in 1s ease-out both;
+    }
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .scroll-zoom {
+      transition: transform 2s ease;
+    }
+
+    .scroll-zoom.in-view {
+      transform: scale(1.05);
+    }
+
+    .flip-card {
+      perspective: 1000px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateX(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1.5rem;
+      /* match Tailwind's rounded-3xl */
+    }
+
+    .flip-card-back {
+      transform: rotateX(180deg);
+    }
+
+    @keyframes fade-in-left {
+      from {
+        opacity: 0;
+        transform: translateX(-24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .animate-fade-in-left {
+      animation: fade-in-left 0.8s ease-out both;
+    }
+  </style>
+</head>
+
+<body class="text-white font-sans">
+  <svg class="hidden">
+    <symbol id="svg1676987305_798" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+      10-4.48 10-10S17.52 2 12 2zm-1 
+      17.07c-2.83-.48-5.08-2.73-5.56-5.56H5v-2h1.44c.48-2.83
+      2.73-5.08 5.56-5.56V5h2v1.44c2.83.48 
+      5.08 2.73 5.56 5.56H19v2h-1.44c-.48 2.83-2.73
+      5.08-5.56 5.56V19h-2v-1.93z" />
+    </symbol>
+  </svg>
+  <!-- Navbar -->
+  <!-- Header -->
+  <div data-include="./components/header.html"></div>
+
+
+  <section class="relative w-full min-h-screen text-white overflow-hidden">
+    <!-- Video Background -->
+    <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
+      <source src="./assets/images/new/new-42.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black z-30"></div>
+
+    <!-- Content -->
+    <div class="relative z-40 flex flex-col justify-center items-start min-h-screen md:px-28 px-6 text-left">
+      <h2
+        class="animate-fade-in-left [animation-delay:100ms] text-2xl md:text-5xl font-bold text-gray-100 leading-tight max-w-xl">
+        Simple, wireless screen sharing for classrooms and meeting rooms.
+      </h2>
+
+      <p class="animate-fade-in-left [animation-delay:300ms] text-lg text-gray-100 max-w-md mt-8">
+        PAGON Connect makes it easy to <strong class="font-semibold">share your screen</strong> from a laptop or
+        device to a large display. Ideal for interactive presentations, lessons, and meetings.
+      </p>
+    </div>
+  </section>
+
+
+
+
+  <section class="bg-cover bg-center bg-no-repeat mt-24 mb-24 p-4 md:p-0 overflow-hidden">
+    <div class="flip-card max-w-7xl mx-auto w-full h-[300px] md:h-[350px]">
+      <div class="flip-card-inner w-full h-full">
+
+        <!-- Front -->
+        <div
+          class="flip-card-front bg-gradient-to-b from-slate-950 via-gray-800 to-gray-800 backdrop-blur-2xl px-6 py-16 text-center flex flex-col justify-center items-center">
+          <h3 class="text-xl md:text-xl font-semibold text-gray-100 tracking-widest mb-4">
+            Discover how PAGON Connect
+            <strong> bridges devices and displays</strong><br />
+            with unmatched simplicity and versatility
+          </h3>
+          <a href="#"
+            class="bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-gray-800 transition mt-4">
+            Coming soon
+          </a>
+        </div>
+
+        <!-- Back -->
+        <div
+          class="flip-card-back bg-gradient-to-b from-slate-900 via-slate-800 to-gray-800 backdrop-blur-2xl px-6 py-16 text-center flex flex-col justify-center items-center">
+          <h3 class="text-xl md:text-xl font-semibold text-white tracking-widest mb-4">
+            Ready to get in touch?
+          </h3>
+          <a href="contact.html"
+            class="bg-indigo-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-indigo-700 transition mt-4">
+            Contact Us
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    <!-- Fullscreen Hero Carousel (adjusted for navbar height) -->
+  <section class="relative w-full h-[calc(100vh-0px)]">
+    <div class="swiper heroSwiper w-full h-full">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-31.png" alt="Hero Image 3" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./assets/images/screen-page-img/school.jpg" alt="Hero Image 4" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-54.png" alt="Hero Image 4" />
+        </div>
+
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-11.jpg" alt="Hero Image 2" />
+        </div>
+
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-28.png" alt="Hero Image 3" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-29.png" alt="Hero Image 2" />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="overflow-x-hidden">
+    <section class="bg-gray-100 py-20">
+      <div
+        class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col-reverse md:flex-row items-center justify-between gap-12 relative">
+
+        <!-- Left Content -->
+        <div class="w-full md:w-1/2 animate-fade-in z-10">
+          <div class="flex items-center mb-4">
+            <!-- <img src="assets/images/logo/logo.png" alt="Logo" class="w-40 h-16 mr-3 object-contain"> -->
+          </div>
+          <h2 class="text-4xl font-bold text-gray-900 leading-tight mb-4">
+            Uses in Schools
+          </h2>
+          <p class="text-gray-600 text-lg">
+            Teachers can instantly cast lessons, videos, or documents onto the classroom screen.
+          </p>
+          <p class="text-gray-600 text-lg mt-4">
+            Use whiteboard mode to write or draw interactively during lessons.
+          </p>
+          <p class="text-gray-600 text-lg mt-4">
+            Use the clock for classroom activities, exams, and tests.
+          </p>
+        </div>
+
+        <!-- Right Image -->
+        <div class="w-full h-[450px] relative">
+          <img src="./assets/images/new/new-16.jpg" alt="Dashboard Screenshot"
+            class="h-[450px] object-cover transform -translate-x-16 ease-linear scroll-zoom absolute top-0 -right-40 rounded-2xl" />
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+
+  <div class="overflow-x-hidden">
+    <section class="bg-gray-100 border-2 md:border-2 border-gray-200 shadow-2xl py-20">
+      <div
+        class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col-reverse md:flex-row items-center justify-between gap-12 relative">
+
+        <!-- Right Image -->
+        <div class="w-full h-[450px] relative">
+          <img src="./assets/images/new/new-17.jpg" alt="Dashboard Screenshot"
+            class="h-[450px] object-cover transform -translate-x-16 ease-linear scroll-zoom absolute top-0  rounded-2xl " />
+        </div>
+        <!-- Left Content -->
+        <div class="w-full md:w-1/2 animate-fade-in z-10 ">
+          <div class="flex items-center mb-4">
+            <!-- <img src="./assets/images/logo/logo.png" alt="Logo" class="w-40 h-16 mr-3 object-contain"> -->
+          </div>
+          <h2 class="text-4xl font-bold text-gray-900 leading-tight mb-4">
+            Uses in Offices
+          </h2>
+          <p class="text-gray-600 text-lg">
+            Seamless presentations during meetings.
+          </p>
+          <p class="text-gray-600 text-lg mt-4">
+            Collaborative whiteboard for brainstorming sessions.
+          </p>
+        </div>
+
+
+
+      </div>
+    </section>
+  </div>
+
+  <section class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center py-24">
+    <div class="max-w-2xl w-full px-6 flex flex-col lg:flex-row items-center justify-center gap-12">
+
+      <!-- 2x2 Image Grid -->
+      <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
+        <div class="bg-gray-800 rounded-xl overflow-hidden">
+          <img src="assets/images/device/device-6.png" alt="Feature 1" class="w-full h-full object-cover" />
+        </div>
+        <div class="bg-gray-800 rounded-xl overflow-hidden">
+          <img src="assets/images/device/device-5.png" alt="Feature 2" class="w-full h-full object-cover" />
+        </div>
+        <div class="bg-gray-800 rounded-xl overflow-hidden">
+          <img src="assets/images/device/device-4.png" alt="Feature 3" class="w-full h-full object-cover" />
+        </div>
+        <div class="bg-gray-800 rounded-xl overflow-hidden">
+          <img src="assets/images/device/device-7.png" alt="Feature 4" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="relative bg-gray-100 text-white py-32 overflow-hidden">
+
+    <!-- Background Image and Overlay -->
+    <div class="relative max-w-4xl mx-auto z-10 animate-fade-in-up duration-700 ease-out">
+      <img src="./assets/images/bg-3.png" alt="Dashboard"
+        class="w-full md:h-[580px] h-[480px] px-4 md:px-0 md:rounded-xl shadow-2xl transform animate-zoom-in duration-1000" />
+
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-20 animate-fade-in-up delay-300">
+        <p class="text-sm opacity-70 mb-1 animate-fade-in delay-500">PAGON Connect</p>
+        <h1 class="text-4xl sm:text-5xl font-semibold leading-snug animate-pulse">
+          Coming <br /> Soon..
+        </h1>
+        <div class="mt-4 w-8 h-8 relative transform rotate-45">
+          <div class="absolute bg-gray-900 w-3.5 h-3.5 animate-ping" style="top:0;left:0;animation-duration:1.2s"></div>
+          <div class="absolute bg-orange-600 w-3.5 h-3.5 animate-ping"
+            style="top:0;right:0;animation-duration:1.2s;animation-delay:0.15s"></div>
+          <div class="absolute bg-orange-600 w-3.5 h-3.5 animate-ping"
+            style="bottom:0;right:0;animation-duration:1.2s;animation-delay:0.3s"></div>
+          <div class="absolute bg-orange-600 w-3.5 h-3.5 animate-ping"
+            style="bottom:0;left:0;animation-duration:1.2s;animation-delay:0.45s"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Card Layout -->
+    <div class="hidden lg:block">
+      <!-- Top Center -->
+      <div
+        class="absolute top-28 w-[384px] h-[170px] left-1/2 -translate-x-1/2 -translate-y-1/2  bg-neutral-900/90 backdrop-blur-xl   p-12 rounded-xl shadow-lg z-30">
+        <h3 class="text-lg font-semibold">Windows, Mac and Android.</h3>
+        <p class="text-sm opacity-80">Get your PAGON Connect in a single click.</p>
+      </div>
+
+      <!-- Bottom Center -->
+      <div
+        class="absolute bottom-28 w-[384px] h-[170px] left-1/2 -translate-x-1/2 translate-y-1/2  bg-neutral-900/90 backdrop-blur-xl p-12 rounded-xl shadow-lg z-30">
+        <h3 class="text-lg font-semibold">Wireless screen sharing.</h3>
+        <p class="text-sm opacity-80">PAGON Connect includes Whiteboard mode for collaboration.</p>
+      </div>
+
+      <!-- Left Top -->
+      <div
+        class="absolute left-28 top-8 sm:top-40 w-[384px] h-[240px] bg-gradient-to-br bg-neutral-900/90 backdrop-blur-xl p-12 rounded-xl shadow-xl z-30 ml-6">
+        <h3 class="text-lg font-semibold">App permissions & dependencies.</h3>
+        <p class="text-sm opacity-80 mt-1">Only IT/Admin teams have access to device settings and configurations via a
+          central control panel.</p>
+        <div class="bg-neutral-800 p-2 mt-3 rounded-md">
+          <p class="text-sm font-semibold">Add users/devices</p>
+          <div class="flex justify-between mt-2 items-center">
+            <span class="text-sm">Central Management System</span>
+            <a href="#" class="text-purple-500 text-sm font-semibold">Install</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left Bottom -->
+      <div
+        class="absolute left-28 bottom-24 sm:bottom-40 w-[384px] h-[240px] bg-gradient-to-br bg-neutral-900/90 backdrop-blur-xl p-12 rounded-xl shadow-xl z-30 ml-6">
+        <h3 class="text-lg font-semibold">Monitor everything.</h3>
+        <p class="text-sm opacity-80 mt-1">Stay on top of your device’s status, storage, and even the temperature.</p>
+        <div class="bg-neutral-800 p-3 mt-3 rounded-md">
+          <p class="text-xs text-gray-400 mb-1">Status</p>
+          <div class="flex justify-between items-center text-sm">
+            <span class="font-bold text-white">Active</span>
+            <span class="text-gray-400">Inactive</span>
+            <span class="text-gray-400">Pending</span>
+          </div>
+          <div class="mt-1 h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="w-1/4 bg-purple-500 h-full"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Top -->
+      <div
+        class="absolute right-28 top-24 sm:top-40 w-[384px] h-[240px] bg-gradient-to-br bg-neutral-900/90 backdrop-blur-xl p-12 rounded-xl shadow-xl z-30 mr-6">
+        <h3 class="text-lg font-semibold">Smart dashboard controlls</h3>
+        <p class="text-sm opacity-80 mt-1">User-friendly interface with comprehensive dashboard insights, Device
+          warnings and diagnostics, playlist and content scheduling</p>
+        <div class="bg-neutral-800 mt-3 p-2 rounded-md">
+          <p class="text-sm">Raise a support Ticket</p>
+          <input type="text" placeholder="write to us"
+            class="mt-2 w-full px-2 py-1 bg-neutral-700 rounded-md text-sm text-white" />
+        </div>
+      </div>
+
+      <!-- Right Bottom -->
+      <div
+        class="absolute right-28 bottom-24 sm:bottom-40 w-[384px] h-[240px] bg-gradient-to-br bg-neutral-900/90 backdrop-blur-xl p-12  rounded-xl shadow-xl z-30 mr-6">
+        <h3 class="text-lg font-semibold">Real-time app updates.</h3>
+        <p class="text-sm opacity-80 mt-1">Install app updates in one click as soon as they’re available.</p>
+        <div class="bg-neutral-800 mt-3 p-2 rounded-md">
+          <p class="text-sm mb-1">5 updates available</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm">Plex</span>
+            <button class="bg-purple-500 text-xs px-2 py-1 rounded">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Layout -->
+    <div class="block lg:hidden mt-16 space-y-6 px-6">
+      <!-- Each mobile card here -->
+      <div class="bg-neutral-900/90 backdrop-blur-xl p-6 rounded-xl shadow-xl">
+        <h3 class="text-lg font-semibold">Windows, Mac and Android.</h3>
+        <p class="text-sm opacity-80">Get your PAGON Connect in a single click.</p>
+      </div>
+
+      <div class="bg-neutral-900/90 backdrop-blur-xl p-6 rounded-xl shadow-xl">
+        <h3 class="text-lg font-semibold">Wireless screen sharing.</h3>
+        <p class="text-sm opacity-80">PAGON Connect includes Whiteboard mode for collaboration.</p>
+      </div>
+
+      <div class="bg-neutral-900/90 backdrop-blur-xl p-6 rounded-xl shadow-xl">
+        <h3 class="text-lg font-semibold">App permissions & dependencies.</h3>
+        <p class="text-sm opacity-80">Only IT/Admin teams have access to device settings.</p>
+        <div class="bg-neutral-800 p-2 mt-3 rounded-md">
+          <p class="text-sm font-semibold">Add users/devices</p>
+          <div class="flex justify-between mt-2 items-center">
+            <span class="text-sm">Central Management System</span>
+            <a href="#" class="text-purple-500 text-sm font-semibold">Install</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-neutral-900/90 backdrop-blur-xl p-6 rounded-xl shadow-xl">
+        <h3 class="text-lg font-semibold">Monitor everything.</h3>
+        <p class="text-sm opacity-80">Stay on top of your device’s status, storage, and temperature.</p>
+        <div class="bg-neutral-800 p-3 mt-3 rounded-md">
+          <p class="text-xs text-gray-400 mb-1">Status</p>
+          <div class="flex justify-between items-center text-sm">
+            <span class="font-bold text-white">Active</span>
+            <span class="text-gray-400">Inactive</span>
+            <span class="text-gray-400">Pending</span>
+          </div>
+          <div class="mt-1 h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="w-1/4 bg-purple-500 h-full"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-neutral-900/90 backdrop-blur-xl p-6 rounded-xl shadow-xl">
+        <h3 class="text-lg font-semibold">Smart dashboard controll.</h3>
+        <p class="text-sm opacity-80">User-friendly dashboard insights, alerts and updates.</p>
+        <div class="bg-neutral-800 mt-3 p-2 rounded-md">
+          <p class="text-sm">Raise a support Ticket</p>
+          <input type="text" placeholder="write to us"
+            class="mt-2 w-full px-2 py-1 bg-neutral-700 rounded-md text-sm text-white" />
+        </div>
+      </div>
+
+      <div class="bg-neutral-900/90 backdrop-blur-xl p-6 rounded-xl shadow-xl">
+        <h3 class="text-lg font-semibold">Real-time app updates.</h3>
+        <p class="text-sm opacity-80">Install updates in one click.</p>
+        <div class="bg-neutral-800 mt-3 p-2 rounded-md">
+          <p class="text-sm mb-1">5 updates available</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm">Plex</span>
+            <button class="bg-purple-500 text-xs px-2 py-1 rounded">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="relative w-full bg-gradient-to-br from-[#111827] via-[#302b63] to-[#24243e] text-white py-24 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <!-- <p class="text-sm text-gray-300 mb-2">That's all. Except not.</p> -->
+      <h2 class="text-3xl sm:text-4xl md:text-4xl font-bold leading-tight mb-4">
+        Centralised management and monitoring of devices via the PAGON Dashboard.
+      </h2>
+      <!-- <p class="text-lg text-gray-300">
+        Discover amazing self-hosted apps in the Umbrel App Store and install them in one click on umbrelOS.
+      </p> -->
+    </div>
+
+    <!-- Image Layer -->
+    <div class="relative mt-20 flex flex-col lg:flex-row items-center justify-center px-4 sm:px-8">
+
+      <!-- Left Tilted Image -->
+      <div class="z-0 transform">
+        <img src="./assets/images/screen-page-img/site-2.png" alt="Side App 1"
+          class="w-[280px] sm:w-[320px] lg:w-[360px] shadow-xl rounded-xl border border-gray-800" />
+      </div>
+
+      <!-- Center Main Image -->
+      <div class="z-10 -mt-10 lg:-mt-0 lg:-ml-12 lg:-mr-12">
+        <img src="./assets/images/screen-page-img/site-3.png" alt="Main App"
+          class="w-[320px] sm:w-[500px] lg:w-[600px] shadow-2xl rounded-2xl border border-gray-700" />
+      </div>
+
+      <!-- Right Tilted Image -->
+      <div class="z-0 transform">
+        <img src="./assets/images/screen-page-img/site-4.png" alt="Side App 2"
+          class="w-[280px] sm:w-[320px] lg:w-[360px] shadow-xl rounded-xl border border-gray-800" />
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+
+  <div data-include="./components/footer.html"></div>
+
+  <!-- Swiper Init -->
+  <script>
+    const swiper = new Swiper(".featureSwiper", {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        640: { slidesPerView: 1.5 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      new Swiper(".heroSwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        loop: true,
+        slidesPerView: 1,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+        },
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        },
+      });
+    });
+  </script>
+  <script>
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const img = entry.target;
+        img.classList.toggle("in-view", entry.isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll('.scroll-zoom').forEach(img => observer.observe(img));
+  </script>
+  <script>
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    els.forEach(el => io.observe(el));
+
+  </script>
+  <script src="./assets/js/injecting.js"></script>
+</body>
+
+</html>

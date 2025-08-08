@@ -1,0 +1,19 @@
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes shimmer-spin {
+      to {
+        --angle: 360deg;
+      }
+    }
+
+    .swiper-pagination-bullet {
+      background: #fff;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: #ff0000;
+    }

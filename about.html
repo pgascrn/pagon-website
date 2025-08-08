@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product | PAGON</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./assets/js/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            colors: {
+                blackGlass: '#060607C9',
+                primary: '#4361EE',
+                cyanish: '#00B4D8',
+                mediumGray: '#999999'
+            }
+            }
+        }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #060607;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body class="text-white font-sans">
+    <svg class="hidden">
+        <symbol id="svg1676987305_798" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+      10-4.48 10-10S17.52 2 12 2zm-1 
+      17.07c-2.83-.48-5.08-2.73-5.56-5.56H5v-2h1.44c.48-2.83
+      2.73-5.08 5.56-5.56V5h2v1.44c2.83.48 
+      5.08 2.73 5.56 5.56H19v2h-1.44c-.48 2.83-2.73
+      5.08-5.56 5.56V19h-2v-1.93z" />
+        </symbol>
+    </svg>
+    <!-- Navbar -->
+    <div data-include="./components/header.html"></div>
+
+
+    <!-- Footer -->
+    <div data-include="./components/footer.html"></div>
+
+  <script src="./assets/js/injecting.js"></script>
+
+</body>
+
+</html>
