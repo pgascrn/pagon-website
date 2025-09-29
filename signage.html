@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/tailwind.js"></script>
     <script>
@@ -28,8 +30,15 @@
     </script>
 
     <style>
+        :root {
+            --pagon-primary: #000000;
+            /* primary */
+            --pagon-cyan: #d80000;
+            /* cyanish */
+        }
+
         body {
-            background-color: #ffffff;
+            background: black
         }
 
         .swiper {
@@ -39,6 +48,12 @@
 
         .swiper-slide img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .display-swiper-slide img {
+            width: 200px;
             height: 100%;
             object-fit: cover;
         }
@@ -128,6 +143,116 @@
             transform: rotateX(180deg);
         }
 
+        /* only applies inside #flip-showcase */
+        /* Existing Flip Effect */
+        /* Gradient background for the flip showcase only */
+        #flip-showcase {
+            background: black;
+            background-color: black;
+            /* fallback */
+        }
+
+        #flip-showcase-1 {
+            background: radial-gradient(circle at top right, rgba(237, 28, 36, 0.08) 0%, rgba(0, 0, 0, 0) 40%),
+                radial-gradient(circle at bottom left, rgba(237, 28, 36, 0.08) 0%, rgba(0, 0, 0, 0) 40%),
+                linear-gradient(145deg, #111111, #1A1A1A);
+            /* fallback */
+        }
+
+        #flip-showcase .flip-card {
+            perspective: 1200px;
+            /* slightly deeper perspective */
+        }
+
+        #flip-showcase .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+            /* smooth ease */
+        }
+
+        #flip-showcase .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+
+        #flip-showcase .flip-card-front,
+        #flip-showcase .flip-card-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 1.5rem;
+            /* match rounded-3xl */
+        }
+
+        /* Back Side Rotation */
+        #flip-showcase .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* --------------------------- */
+        /* Front Card Styling Updates  */
+        /* --------------------------- */
+        #flip-showcase .flip-card-front {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(145deg, #2a2929, #000000);
+            box-shadow: 0 0 20px rgba(60, 55, 55, 0.6);
+            transition: box-shadow 0.4s ease;
+        }
+
+        #flip-showcase .flip-card-front img {
+            width: 80px;
+            /* smaller, balanced logo size */
+            margin-bottom: 1.5rem;
+        }
+
+        #flip-showcase .flip-card-front h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        #flip-showcase .flip-card-front p {
+            font-size: 0.875rem;
+            color: #b0b0b0;
+            /* light gray tagline */
+        }
+
+        /* Hover Glow Effect */
+        #flip-showcase .flip-card:hover .flip-card-front {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+        }
+
+        /* --------------------------- */
+        /* Back Card Styling Updates   */
+        /* --------------------------- */
+        #flip-showcase .flip-card-back {
+            overflow: hidden;
+            position: relative;
+        }
+
+        #flip-showcase .flip-card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #flip-showcase .flip-card-back::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            /* dark overlay */
+        }
+
         @media (prefers-reduced-motion: reduce) {
 
             .animate-fade-in-up,
@@ -161,6 +286,125 @@
         .reveal.show {
             opacity: 4;
         }
+
+        /* Bigger, isolated display carousel */
+        .pagonDisplaySection {
+            position: relative;
+            isolation: isolate;
+            /* soft brandy accents + dark gradient base */
+            background:
+                radial-gradient(900px 420px at 12% 12%, color-mix(in oklab, var(--pagon-primary) 16%, transparent) 0%, transparent 60%),
+                radial-gradient(900px 420px at 88% 8%, color-mix(in oklab, var(--pagon-cyan) 16%, transparent) 0%, transparent 60%),
+                linear-gradient(180deg, #15171c 0%, #0d0f14 100%);
+        }
+
+        .pagonDisplayCard {
+            position: relative;
+            margin-inline: auto;
+            width: min(92vw, 1280px);
+            padding: 36px 70px;
+            /* space for arrows */
+            border-radius: 24px;
+            background: radial-gradient(circle at bottom left,
+                    rgba(255, 0, 0, 0.08) 0%,
+                    rgba(0, 0, 0, 0) 40%),
+                radial-gradient(circle at top right,
+                    rgba(234, 24, 24, 0.08) 0%,
+                    rgba(0, 0, 0, 0) 40%),
+                linear-gradient(180deg, #f4f5f7 0%, #0e0e0e 100%);
+            border: 1px solid rgba(255, 255, 255, .06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+            overflow: hidden;
+            /* clip slides to the box */
+        }
+
+        /* make the slider tall inside the card */
+        .pagonDisplaySwiper {
+            height: clamp(420px, 50vh, 560px);
+        }
+
+        /* wider slides so center image looks big, but still fits the card */
+        .pagonDisplaySwiper .swiper-slide {
+            width: clamp(320px, 68%, 1100px);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* image sizing + letterbox fill color */
+        .pagonDisplaySwiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* don’t crop UI screenshots */
+            background:
+                radial-gradient(120% 120% at 50% 50%, #151923, #0b0d12);
+            /* fill empty space */
+            border-radius: 16px;
+            border: 1px solid rgba(63, 63, 70, .6);
+            box-shadow: 0 22px 60px rgba(0, 0, 0, .35);
+        }
+
+        /* arrows/pagination placed INSIDE the box */
+        .pagonDisplayCard .swiper-button-prev,
+        .pagonDisplayCard .swiper-button-next {
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+
+        .pagonDisplayCard .swiper-button-prev {
+            left: 16px;
+        }
+
+        .pagonDisplayCard .swiper-button-next {
+            right: 16px;
+        }
+
+        .pagonDisplayCard .swiper-button-prev::after,
+        .pagonDisplayCard .swiper-button-next::after {
+            font-size: 16px;
+        }
+
+        .pagonDisplayCard .swiper-pagination {
+            bottom: 12px !important;
+        }
+
+
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-slide-left {
+            animation: slideInLeft 1s ease forwards;
+        }
+
+        .animate-slide-right {
+            animation: slideInRight 1s ease forwards;
+        }
     </style>
 </head>
 
@@ -182,404 +426,386 @@
     <!-- Fullscreen Hero Section with Overlapping Navbar -->
 
 
-    <section class="relative w-full min-h-screen text-white overflow-hidden">
+    <section id="hero"
+        class="relative w-full min-h-screen text-white overflow-hidden bg-[url('assets/images/signage/signage-10.png.jpg')] bg-cover bg-center">
+        <!-- <section class="relative w-full min-h-screen text-white overflow-hidden">
         <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
-            <source src="./assets/images/new/new-38.mp4" type="video/mp4" />
-        </video>
+            <source src="./assets/images/signage/signage-6.mp4" type="video/mp4" />
+        </video> -->
 
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black z-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black z-40"></div>
 
-        <div class="relative z-40 flex flex-col justify-center items-end min-h-screen md:px-16 px-8 text-left">
-            <h2 class="reveal text-4xl md:text-5xl font-bold leading-tight
+        <div class="relative z-40 flex flex-col justify-center min-h-screen md:px-28 px-8">
+            <div class="text-left">
+                <h2 class="reveal text-4xl md:text-5xl font-bold leading-tight
              animate-fade-in-right [animation-delay:100ms] will-change-transform">
-                Digital Signage System
-            </h2>
+                    Digital Signage System
+                </h2>
 
-            <p class="reveal text-lg text-gray-100 max-w-md mx-auto md:mx-0 mt-8
-             animate-fade-in-right [animation-delay:100ms] will-change-transform">
-                PAGON’s <strong class="font-semibold">Digital Signage System</strong> is a reliable solution
-                designed to deliver scheduled multimedia content across multiple displays.
-            </p>
+                <p class="reveal text-lg text-white max-w-md mx-auto md:mx-0 mt-8
+             animate-fade-in-right [animation-delay:100ms] will-change-transform ">
+                    PAGON’s <strong class="font-semibold">Digital Signage System</strong> is a reliable solution
+                    designed to deliver scheduled multimedia content across multiple displays.
+                </p>
 
-            <p class="reveal text-lg text-gray-100 max-w-md mx-auto md:mx-0 mt-6
+                <p class="reveal text-lg text-gray-200 max-w-md mx-auto md:mx-0 mt-6
              animate-fade-in-right [animation-delay:100ms] will-change-transform">
-                Whether it's school campuses or corporate spaces, keep everyone informed and engaged through one central
-                system.
-            </p>
+                    Whether it's school campuses or corporate spaces, keep everyone informed and engaged through one
+                    central
+                    system.
+                </p>
+                <button type="submit"
+                    class="px-6 py-2 mt-4 rounded-full text-white font-medium transition duration-300 bg-[#D80004]"
+                    onclick="document.getElementById('solutions').scrollIntoView({behavior:'smooth'})"
+                    onmouseover="this.style.background='linear-gradient(135deg, #B32B30, #8C2024)'"
+                    onmouseout="this.style.background='linear-gradient(135deg, #992226, #7A1A1E)'">
+                    Read More
+                </button>
+            </div>
+
         </div>
     </section>
 
+    <!-- For a floating banner that appears at the bottom of the viewport: -->
+    <section id="buy-demo-float"
+        class="buy-demo-floating fixed bottom-6 left-4 right-4 z-50 bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl opacity-0 translate-y-8 transition-all duration-700 ease-out max-w-2xl mx-auto">
+        <div class="absolute -top-4 -right-2">
+            <button id="buy-demo-close" aria-label="Close"
+                class="w-8 h-8 grid place-items-center rounded-lg border border-white/20 hover:bg-white/10">
+                ✕
+            </button>
+        </div>
 
-    <section class="mt-24 mb-24 p-4 md:p-0 overflow-hidden">
-        <div class="flip-card max-w-7xl mx-auto w-full h-[300px] md:h-[350px]">
-            <div class="flip-card-inner w-full h-full">
+        <div class="flex items-center justify-between p-4 md:p-4 rounded-4xl">
 
-                <!-- Front -->
-                <div
-                    class="flip-card-front bg-gradient-to-b from-slate-950 via-gray-800 to-gray-800 backdrop-blur-2xl px-6 py-16 text-center flex flex-col justify-center items-center">
-                    <h3 class="text-xl md:text-xl font-semibold text-gray-100 tracking-widest mb-4">
-                        Discover how the Digital Signage System
-                        <strong> bridges devices and displays</strong><br />
-                        with unmatched simplicity and versatility
-                    </h3>
-                    <a href="#"
-                        class="bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-gray-800 transition mt-4">
-                        Buy a Demo Unit
-                    </a>
+            <div class="flex items-center space-x-3 md:space-x-4 flex-1">
+                <div class="flex-shrink-0">
+                    <div
+                        class="w-12 h-8 md:w-14 md:h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg border border-gray-500 flex items-center justify-center">
+                        <img src="./assets/images/device/device-8.png" alt="Hero Image 2" />
+                    </div>
                 </div>
-
-                <!-- Back -->
-                <div
-                    class="flip-card-back bg-gradient-to-b from-slate-900 via-slate-800 to-gray-800 backdrop-blur-2xl px-6 py-16 text-center flex flex-col justify-center items-center">
-                    <h3 class="text-xl md:text-xl font-semibold text-gray-100 tracking-widest mb-4">
-                        Discover how the Digital Signage System
-                        <strong> bridges devices and displays</strong><br />
-                        with unmatched simplicity and versatility
-                    </h3>
-                    <a href="contact.html"
-                        class="bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-indigo-700 transition mt-4">
-                        Buy a Demo Unit
-                    </a>
+                <div class="flex-1 min-w-0">
+                    <p class="text-white text-xs md:text-sm leading-relaxed font-medium">
+                        Discover how the Digital Signage System bridges devices and displays
+                    </p>
                 </div>
+            </div>
+            <div class="flex-shrink-0 ml-3">
+                <button
+                    class="bg-[#D80004] hover:bg-[#B30003] text-white px-4 py-2 md:px-6 md:py-2 rounded-lg font-semibold transition-colors duration-300 text-xs md:text-sm"
+                    onclick="window.location.href='contact.html'">
+                    Buy Demo
+                </button>
 
             </div>
         </div>
     </section>
 
 
-    <!-- Features Section with Connect 3 CTA -->
-    <section class="bg-gray-100 py-16 px-4 md:px-8">
-        <div class="max-w-7xl mx-auto text-center">
+
+    <section id="solutions" class="py-16 px-4 md:px-8">
+        <div class="max-w-4xl mx-auto text-center">
 
             <!-- Section Title -->
-            <h2 class="text-3xl md:text-4xl font-semibold text-gray-800 mb-12">
+            <h2 class="text-3xl md:text-4xl font-semibold text-gray-100 mb-12">
                 Our Digital Signage System Solutions
             </h2>
 
             <!-- Features -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-60 mb-20">
 
                 <!-- Feature 1 -->
-                <div class="flex flex-col items-center text-center space-y-2">
-                    <div
-                        class="bg-gradient-to-r from-white/90 via-white/70 to-white/90 backdrop-blur-lg p-2 rounded-full">
-                        <img src="./assets/images/screen-page-img/ctp-8.png" alt="Compact Icon"
-                            class="w-64 h-64 rounded-full object-cover" />
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800">Uses in Schools</h3>
-                    <p class="text-gray-600 max-w-xs">
+                <div class="card-left flex flex-col  text-center space-y-4 ">
+                    <img src="./assets/images/new/new-76.png" alt="Compact Icon"
+                        class="w-72 h-72 object-fit rounded-3xl  shadow-lg transition duration-300" />
+
+                    <h3 class="text-md text-left pl-1 font-semibold text-white">Digital Signage for Education</h3>
+                    <p class="text-gray-300 text-[12px] text-left max-w-xs">
                         Display timetables, alerts, news, and event updates in classrooms, libraries, and reception
                         areas.
                     </p>
-                    <p class="text-gray-600 max-w-xs">
+                    <!-- <p class="text-gray-300 max-w-xs text-[12px]">
                         Schedule bell times or emergency messages from one dashboard.
                     </p>
+                     -->
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="flex flex-col items-center text-center space-y-2">
-                    <div
-                        class="bg-gradient-to-r from-white/90 via-white/70 to-white/90 backdrop-blur-lg p-2 rounded-full">
-                        <img src="./assets/images/new/new-17.jpg" alt="Efficient Icon"
-                            class="w-64 h-64 object-fit rounded-full" />
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800">Uses in Offices</h3>
-                    <p class="text-gray-600 max-w-xs">
+                <div class="card-right flex flex-col  space-y-4 mt-12">
+                    <div class="p-2 rounded-full shadow-lg"></div>
+                    <img src="./assets/images/new/new-77.png" alt="Efficient Icon"
+                        class="w-72 h-72 rounded-3xl object-cover  shadow-lg transition duration-300" />
+
+                    <h3 class="text-md text-left pl-1 font-semibold text-white">Corporate Communication Solutions</h3>
+                    <p class="text-gray-300 max-w-xs text-left text-[12px]">
                         Update meeting room signage, welcome messages, or corporate announcements across multiple office
                         locations instantly.
                     </p>
                 </div>
-
             </div>
 
-            <!-- Connect 3 Description + CTA -->
-            <!-- <div class="max-w-3xl mx-auto text-center">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Digital Signage System</h3>
-                <p class="text-gray-700 text-lg mb-8">
-                    Discover how the Digital Signage System<strong> bridges devices and displays</strong> with unmatched
-                    simplicity and versatility.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="contact.html"
-                        class="bg-gray-800 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-gray-900 transition">
-                        Buy a Demo Unit
-                    </a>
-                </div>
-            </div> -->
-
+        </div>
         </div>
     </section>
 
-
-    <!-- Fullscreen Hero Carousel (adjusted for navbar height) -->
-    <section class="relative w-full h-[calc(100vh-1px)]">
-        <div class="swiper heroSwiper w-full h-full">
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/screen-page-img/hero-20.png" alt="Hero Image 2" />
-                </div> -->
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/screen-page-img/collage.png" alt="Hero Image 4" />
-                </div> -->
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/new/new-27.png" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-22.png" alt="Hero Image 4" />
-                </div> -->
-
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/new/new-2.jpg" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-24.png" alt="Hero Image 4" />
-                </div>
-
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-25.png" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-26.png" alt="Hero Image 4" />
-                </div> -->
-
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/new/new-1.jpg" alt="Hero Image 2" />
-                </div>
-                                     <div class="swiper-slide">
-                    <img src="./assets/images/new/new-7.jpg" alt="Hero Image 2" />
-                </div>
-                                            <div class="swiper-slide">
-                    <img src="./assets/images/new/new-15.jpg" alt="Hero Image 2" />
-                </div>
-                                                            <div class="swiper-slide">
-                    <img src="./assets/images/new/new-20.jpg" alt="Hero Image 2" />
-                </div> -->
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-23.png" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-55.png" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-56.png" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-57.png" alt="Hero Image 2" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-58.png" alt="Hero Image 2" />
-                </div>
-
-                <div class="swiper-slide">
-                    <img src="./assets/images/new/new-60.png" alt="Hero Image 2" />
-                </div>
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/new/new-53.png" alt="Hero Image 4" />
-                </div> -->
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/screen-page-img/ctp-9.png" alt="Hero Image 4"  class="object-contain max-w-full max-h-full"/>
-                </div> -->
-                <!-- <div class="swiper-slide">
-                    <img src="./assets/images/screen-page-img/school.jpg" alt="Hero Image 3" />
-                </div> -->
-            </div>
+    <!-- Connect With Unlimited Features Section -->
+    <section class="relative min-h-screen py-20 px-4 md:px-8 overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style="background-image: url('assets/images/new/background.jpg');">
         </div>
-    </section>
 
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-black/60"></div>
 
-
-    <section class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center py-24">
-        <div class="max-w-2xl w-full px-6 flex flex-col lg:flex-row items-center justify-center gap-12">
-
-            <!-- 2x2 Image Grid -->
-            <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
-                <div class="bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="assets/images/device/device-6.png" alt="Feature 1" class="w-full h-full object-cover" />
-                </div>
-                <div class="bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="assets/images/device/device-5.png" alt="Feature 2" class="w-full h-full object-cover" />
-                </div>
-                <div class="bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="assets/images/device/device-4.png" alt="Feature 3" class="w-full h-full object-cover" />
-                </div>
-                <div class="bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="assets/images/device/device-7.png" alt="Feature 4" class="w-full h-full object-cover" />
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Swiper Container -->
-    <section class="bg-neutral-950/90 backdrop-blur-2xl py-16 min-h-screen">
-        <div class="container mx-auto px-4 md:px-24">
-
-            <!-- ✅ Mobile Grid View -->
-            <div class="grid gap-6 md:hidden">
-                <!-- Slide 1 -->
-                <div
-                    class="bg-gradient-to-br from-orange-600 to-purple-900 text-white rounded-2xl shadow-xl p-8 h-[500px]">
-                    <h3 class="text-lg font-bold mb-2 mt-4">Centralised content scheduling.</h3>
-                    <p class="text-sm mb-4 mt-8">
-                        Easily plan and manage content across multiple screens from one central dashboard.
-                        Schedule images, videos, or messages to play at specific times for maximum impact.
-                    </p>
-                    <img src="./assets/images/new/new-59.png" alt="Home Assistant UI"
-                        class="rounded-2xl shadow-lg w-full mt-24">
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="bg-gradient-to-br from-cyan-700 to-blue-900 text-white rounded-2xl shadow-xl p-8 h-[500px]">
-                    <h3 class="text-lg font-bold mb-2 mt-4">Real-time device status.</h3>
-                    <p class="text-sm mb-4 mt-8">
-                        Instantly see whether your connected devices are online or offline.
-                        Stay in control with live updates to ensure all screens are functioning as expected.
-                    </p>
-                    <img src="./assets/images/device11.jpg" alt="Plex UI" class="rounded-2xl shadow-lg w-full mt-24">
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="bg-gradient-to-br from-zinc-700 to-black text-white rounded-2xl shadow-xl p-8 h-[450px]">
-                    <h3 class="text-lg font-bold mb-2 mt-4">Device diagnostics and alerts.</h3>
-                    <p class="text-sm mb-4 mt-8">
-                        Get notified about any device issues such as disconnections or hardware faults.
-                        Diagnostic tools help you troubleshoot and maintain system health remotely.
-                    </p>
-                    <img src="./assets/images/screen-page-img/device10.png" alt="Device UI"
-                        class="rounded-2xl shadow-lg w-full mt-24">
-                </div>
-
-                <!-- Slide 4 -->
-                <div
-                    class="bg-gradient-to-br from-amber-600 to-orange-800 text-white rounded-2xl shadow-xl p-8 h-[500px]">
-                    <h3 class="text-lg font-bold mb-2 mt-4">User-friendly interface and dashboard.</h3>
-                    <p class="text-sm mb-4 mt-8">
-                        The intuitive dashboard is designed for all users - no technical skills required.
-                        Navigate, monitor, and manage everything with just a few clicks.
-                    </p>
-                    <img src="./assets/images/screen-page-img/site-3.png" alt="Pi-hole UI"
-                        class="rounded-2xl shadow-lg w-full mt-24">
-                </div>
-
-                <!-- Slide 5 -->
-                <div class="bg-gradient-to-br from-zinc-700 to-black text-white rounded-2xl shadow-xl p-8 h-[500px]">
-                    <h3 class="text-lg font-bold mb-2 mt-8">Date, Time, and Weather Widgets.</h3>
-                    <p class="text-sm mb-4 mt-4">
-                        Enhance screen utility with dynamic widgets showing current time, date, and local weather.
-                        These update automatically to keep your content informative and timely.
-                    </p>
-                    <img src="./assets/images/screen-page-img/new-15.jpeg" alt="Weather UI"
-                        class="rounded-2xl shadow-lg w-full mt-24">
-                </div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-xl md:text-xl lg:text-[32px] font-bold text-white mb-4">
+                    Product Features
+                </h2>
             </div>
 
-            <!-- ✅ Desktop Swiper View -->
-            <div class="hidden md:block">
-                <div class="swiper featureSwiper">
-                    <div class="swiper-wrapper">
-                        <!-- Slide 1 -->
-                        <div
-                            class="swiper-slide bg-gradient-to-br from-orange-600 to-purple-900 text-white rounded-2xl shadow-xl w-[300px] h-[600px]">
-                            <div class="p-16">
-                                <h3 class="text-lg font-bold mb-2 mt-8">Centralised content scheduling.</h3>
-                                <p class="text-sm mb-8 mt-16">Easily plan and manage content across multiple screens
-                                    from one
-                                    central dashboard. Schedule images, videos, or messages to play at specific times
-                                    for
-                                    maximum impact.</p>
-                            </div>
-                            <div>
-                                <img src="./assets/images/new/new-59.png" alt="Home Assistant UI"
-                                    class="rounded-2xl shadow-lg w-full mt-20 pl-24">
-                            </div>
-                        </div>
+            <!-- Features List -->
+            <div class="space-y-6 max-w-2xl mx-auto">
 
-                        <!-- Slide 2 -->
-                        <div
-                            class="swiper-slide bg-gradient-to-br from-cyan-700 to-blue-900 text-white rounded-2xl shadow-xl w-[300px] h-[600px]">
-                            <div class="p-16">
-                                <h3 class="text-lg font-bold mb-2 mt-8">Real-time device status.</h3>
-                                <p class="text-sm mb-8 mt-16">Instantly see whether your connected devices are online or
-                                    offline.
-                                    Stay in control with live updates to ensure all screens are functioning as expected.
-                                </p>
-                            </div>
-                            <div>
-                                <img src="./assets/images/screen-page-img/device-11.png" alt="Plex UI"
-                                    class="rounded-2xl shadow-lg w-full mt-16 pl-12 mb-0">
-                            </div>
-                        </div>
+                <!-- HDMI Feature -->
+                <div class="feature-item opacity-0 translate-x-8 transition-all duration-700 ease-out">
+                    <div
+                        class="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <!-- Left side - Icon and content -->
+                            <div class="flex items-center space-x-4 flex-1">
+                                <!-- HDMI Icon -->
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-b from-[#5C5F61] via-[#C3C3C5] to-[#EFE0CB] rounded-xl flex items-center justify-center">
+                                        <img src="assets/images/features/feature1.png" alt="PAGON logo" />
+                                    </div>
+                                </div>
 
-                        <!-- Slide 3 -->
-                        <div
-                            class="swiper-slide bg-gradient-to-br from-zinc-700 to-black text-white rounded-2xl shadow-xl w-[300px] h-[600px]">
-                            <div class="p-16">
-                                <h3 class="text-lg font-bold mb-2 mt-8">Device diagnostics and alerts.</h3>
-                                <p class="text-sm mb-8 mt-16">Get notified about any device issues such as
-                                    disconnections or
-                                    hardware faults. Diagnostic tools help you troubleshoot and maintain system health
-                                    remotely.</p>
+                                <!-- Content -->
+                                <div class="flex-1">
+                                    <h3 class="text-[12px] font-bold text-white mb-1">HDMI</h3>
+                                    <p class="text-gray-300 text-[10px]">Connect Via HDMI Cable</p>
+                                </div>
                             </div>
-                            <div>
-                                <img src="./assets/images/screen-page-img/device10.png" alt="Device UI"
-                                    class="rounded-2xl shadow-lg w-full mt-24 pl-24">
-                            </div>
-                        </div>
 
-                        <!-- Slide 4 -->
-                        <div
-                            class="swiper-slide bg-gradient-to-br from-amber-600 to-orange-800 text-white rounded-2xl shadow-xl w-[300px] h-[600px]">
-                            <div class="p-16">
-                                <h3 class="text-lg font-bold mb-2 mt-8">User-friendly interface and dashboard.</h3>
-                                <p class="text-sm mb-8 mt-16">The intuitive dashboard is designed for all users - no
-                                    technical
-                                    skills required. Navigate, monitor, and manage everything with just a few clicks.
-                                </p>
-                            </div>
-                            <div>
-                                <img src="./assets/images/screen-page-img/site-3.png" alt="Pi-hole UI"
-                                    class="rounded-2xl shadow-lg w-full mt-16 pl-24">
-                            </div>
-                        </div>
-
-                        <!-- Slide 5 -->
-                        <div
-                            class="swiper-slide bg-gradient-to-br from-zinc-700 to-black text-white rounded-2xl shadow-xl w-[300px] h-[600px]">
-                            <div class="p-16">
-                                <h3 class="text-lg font-bold mb-2 mt-8">Date, Time, and Weather Widgets.</h3>
-                                <p class="text-sm mb-8 mt-16">Enhance screen utility with dynamic widgets showing
-                                    current
-                                    time, date, and local weather. These update automatically to keep your content
-                                    informative and timely.</p>
-                            </div>
-                            <div>
-                                <img src="./assets/images/screen-page-img/new-15.jpeg" alt="Weather UI"
-                                    class="rounded-2xl shadow-lg w-full mt-20 pl-24">
+                            <!-- Right side - Check mark -->
+                            <div class="flex-shrink-0">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Swiper Arrows -->
-                    <div class="swiper-button-prev !text-gray-700"></div>
-                    <div class="swiper-button-next !text-gray-700"></div>
                 </div>
+
+                <!-- Network Feature -->
+
+                <div class="feature-item opacity-0 translate-x-8 transition-all duration-700 ease-out">
+                    <div class="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden
+           p-6 hover:border-white/20 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 flex-1">
+                                <!-- Icon -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 bg-[#D9D9D9] rounded-xl overflow-hidden
+                      flex items-center justify-center">
+                                        <img src="assets/images/features/feature10.jpeg" alt="PAGON logo"
+                                            class="w-full h-full object-cover">
+                                    </div>
+                                </div>
+
+                                <div class="flex-1">
+                                    <h3 class="text-[12px] font-bold text-white mb-1">Network</h3>
+                                    <p class="text-gray-300 text-[10px]">Built in Ethernet Connection</p>
+                                </div>
+                            </div>
+
+                            <div class="flex-shrink-0">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type C Feature 1 -->
+                <div class="feature-item opacity-0 translate-x-8 transition-all duration-700 ease-out">
+                    <div
+                        class="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 flex-1">
+                                <!-- USB-C Icon -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 bg-[#D9D9D9] rounded-xl flex items-center justify-center">
+                                        <img src="assets/images/features/feature3.png" alt="PAGON logo" />
+                                    </div>
+                                </div>
+
+                                <div class="flex-1">
+                                    <h3 class="text-[12px] font-bold text-white mb-1">Type C</h3>
+                                    <p class="text-gray-300 text-[10px]">Power Up With Type C</p>
+                                </div>
+                            </div>
+
+                            <div class="flex-shrink-0">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type C Feature 2 -->
+                <div class="feature-item opacity-0 translate-x-8 transition-all duration-700 ease-out">
+                    <div
+                        class="bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 flex-1">
+                                <!-- USB-C Icon -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 bg-[#D9D9D9] rounded-xl flex items-center justify-center">
+                                        <img src="assets/images/features/feature9.jpeg" alt="PAGON logo" />
+                                    </div>
+                                </div>
+
+                                <div class="flex-1">
+                                    <h3 class="text-[12px] font-bold text-white mb-1">Cross Platform</h3>
+                                    <p class="text-gray-300 text-[10px]">Windows / Mac / iOS</p>
+                                </div>
+                            </div>
+
+                            <div class="flex-shrink-0">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
 
+    <section id="flip-showcase" class=" text-gray-100 min-h-screen flex items-center justify-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl">
 
-    <section
-        class="relative w-full bg-gradient-to-br from-[#111827] via-[#302b63] to-[#24243e] text-white py-24 overflow-hidden">
+            <!-- Card Component -->
+            <div class="flip-card aspect-square group">
+                <div class="flip-card-inner">
+                    <!-- Front -->
+                    <div
+                        class="flip-card-front  backdrop-blur-xl shadow-3xl rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 transition-all duration-500 group-hover:shadow-red-500/30">
+                        <!-- <img src="../assets/images/Pagon-logo-white.png" alt="PAGON logo" class="w-[80px] mb-6" /> -->
+                        <h3 class="text-[14px] font-bold mb-2">Centralised</h3>
+                        <p class="text-sm text-gray-400">content scheduling.</p>
+                    </div>
+                    <!-- Back -->
+                    <div class="flip-card-back bg-gray-800 rounded-xl overflow-hidden relative">
+                        <img src="./assets/images/new/new-79.png" alt="Feature Back"
+                            class="w-full h-full object-cover" />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repeat for other cards -->
+            <div class="flip-card aspect-square group">
+                <div class="flip-card-inner">
+                    <div
+                        class="flip-card-front bg-gradient-to-br from-neutral-900 to-neutral-950/90 backdrop-blur-xl shadow-3xl rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 transition-all duration-500 group-hover:shadow-red-500/30">
+                        <!-- <img src="../assets/images/Pagon-logo-white.png" alt="PAGON logo" class="w-[80px] mb-6" /> -->
+                        <h3 class="text-2xl font-bold mb-2">Real-time</h3>
+                        <p class="text-sm text-gray-400">device status.</p>
+                    </div>
+                    <div class="flip-card-back bg-gray-800 rounded-xl overflow-hidden relative">
+                        <img src="./assets/images/screen-page-img/device-11.png" alt="Feature Back"
+                            class="w-full h-full object-cover" />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card aspect-square group">
+                <div class="flip-card-inner">
+                    <div
+                        class="flip-card-front bg-gradient-to-br from-neutral-900 to-neutral-950/90 backdrop-blur-xl shadow-3xl rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 transition-all duration-500 group-hover:shadow-red-500/30">
+                        <!-- <img src="../assets/images/Pagon-logo-white.png" alt="PAGON logo" class="w-[80px] mb-6" /> -->
+                        <h3 class="text-2xl font-bold mb-2">Device</h3>
+                        <p class="text-sm text-gray-400">diagnostics and alerts.</p>
+                    </div>
+                    <div class="flip-card-back bg-gray-800 rounded-xl overflow-hidden relative">
+                        <img src="./assets/images/new/new-85.png" alt="Feature Back"
+                            class="w-full h-full object-cover" />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card aspect-square group">
+                <div class="flip-card-inner">
+                    <div
+                        class="flip-card-front bg-gradient-to-br from-neutral-900 to-neutral-950/90 backdrop-blur-xl shadow-3xl rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 transition-all duration-500 group-hover:shadow-red-500/30">
+                        <!-- <img src="../assets/images/Pagon-logo-white.png" alt="PAGON logo" class="w-[80px] mb-6" /> -->
+                        <h3 class="text-2xl font-bold mb-2">User-friendly</h3>
+                        <p class="text-sm text-gray-400">interface and dashboard.</p>
+                    </div>
+                    <div class="flip-card-back bg-gray-800 rounded-xl overflow-hidden relative">
+                        <img src="./assets/images/new/new-80.png" alt="Feature Back" class=" object-left-bottom" />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card aspect-square group">
+                <div class="flip-card-inner">
+                    <div
+                        class="flip-card-front bg-gradient-to-br from-neutral-900 to-neutral-950/90 backdrop-blur-xl shadow-3xl rounded-xl overflow-hidden flex flex-col items-center justify-center p-8 transition-all duration-500 group-hover:shadow-red-500/30">
+                        <!-- <img src="../assets/images/Pagon-logo-white.png" alt="PAGON logo" class="w-[80px] mb-6" /> -->
+                        <h3 class="text-2xl font-bold mb-2">Date and Time</h3>
+                    </div>
+                    <div class="flip-card-back bg-gray-800 rounded-xl overflow-hidden relative">
+                        <img src="./assets/images/new/new-95.png" alt="Feature Back"
+                            class="w-full h-full object-cover" />
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="relative w-full  text-white py-24 overflow-hidden">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <!-- <p class="text-sm text-gray-300 mb-2">That's all. Except not.</p> -->
             <h2 class="text-3xl sm:text-4xl md:text-4xl font-bold leading-tight mb-4">
-                Centralised management and monitoring of devices via the Pagon Dashboard.
+                Centralised management and monitoring of devices via the PAGON Dashboard.
             </h2>
-
             <!-- <p class="text-lg text-gray-300">
-                Discover amazing self-hosted apps in the Umbrel App Store and install them in one click on umbrelOS.
-            </p> -->
+        Discover amazing self-hosted apps in the Umbrel App Store and install them in one click on umbrelOS.
+      </p> -->
         </div>
 
         <!-- Image Layer -->
@@ -587,7 +813,7 @@
 
             <!-- Left Tilted Image -->
             <div class="z-0 transform">
-                <img src="./assets/images/screen-page-img/site-2.png" alt="Side App 1"
+                <img src="./assets/images/new/new-82.png" alt="Side App 1"
                     class="w-[280px] sm:w-[320px] lg:w-[360px] shadow-xl rounded-xl border border-gray-800" />
             </div>
 
@@ -600,45 +826,16 @@
             <!-- Right Tilted Image -->
             <div class="z-0 transform">
                 <img src="./assets/images/screen-page-img/site-4.png" alt="Side App 2"
-                    class="w-[280px] sm:w-[320px] lg:w-[360px] shadow-xl rounded-xl border border-gray-800" />
+                    class="w-[280px] sm:w-[320px] lg:w-[360px] h-[250px] shadow-xl rounded-xl border border-gray-800" />
             </div>
 
         </div>
     </section>
 
-
-
-
-
-
-
     <!-- Footer -->
     <div data-include="./components/footer.html"></div>
 
-    <!-- Dynamic Content Loader -->
 
-
-    <!-- Swiper Init -->
-    <!-- <script>
-        const swiper = new Swiper(".featureSwiper", {
-            slidesPerView: 1.2,
-            spaceBetween: 20,
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                640: { slidesPerView: 1.5 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-            },
-        });
-    </script> -->
     <script>
         if (window.innerWidth >= 320) {
             const swiper = new Swiper('.featureSwiper', {
@@ -705,6 +902,211 @@
 
         els.forEach(el => io.observe(el));
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            new Swiper(".pagonDisplaySwiper", {
+                effect: "coverflow",
+                centeredSlides: true,
+                loop: true,
+                slidesPerView: "auto",     // the slide width comes from CSS
+                spaceBetween: 28,
+                autoplay: { delay: 3500, disableOnInteraction: false },
+                coverflowEffect: {
+                    rotate: 8,
+                    stretch: -20,
+                    depth: 220,
+                    modifier: 1,
+                    slideShadows: false,
+                },
+                navigation: {
+                    nextEl: ".pagonDisplayCard .swiper-button-next",
+                    prevEl: ".pagonDisplayCard .swiper-button-prev",
+                },
+                pagination: { el: ".pagonDisplayCard .swiper-pagination", clickable: true },
+            });
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const leftCard = document.querySelector(".card-left");
+            const rightCard = document.querySelector(".card-right");
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            if (entry.target.classList.contains("card-left")) {
+                                entry.target.classList.add("animate-slide-left");
+                                entry.target.classList.remove("opacity-0");
+                            } else if (entry.target.classList.contains("card-right")) {
+                                entry.target.classList.add("animate-slide-right");
+                                entry.target.classList.remove("opacity-0");
+                            }
+                        } else {
+                            // Remove animation classes when out of view (so it can replay)
+                            entry.target.classList.remove("animate-slide-left", "animate-slide-right");
+                            entry.target.classList.add("opacity-0");
+                        }
+                    });
+                },
+                { threshold: 0.3 }
+            );
+
+            observer.observe(leftCard);
+            observer.observe(rightCard);
+        });
+    </script>
+
+    <script>
+        // Enhanced scroll-triggered animation
+        document.addEventListener("DOMContentLoaded", function () {
+            // For regular banner
+            const buyDemoBanner = document.querySelector('.buy-demo-banner');
+
+            // For floating banner (choose one)
+            const floatingBanner = document.querySelector('.buy-demo-floating');
+
+            if (buyDemoBanner) {
+                const buyDemoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.remove('opacity-0', 'translate-y-8');
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                            buyDemoObserver.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                });
+
+                buyDemoObserver.observe(buyDemoBanner);
+            }
+
+            // For floating banner - appears after scrolling past hero section
+            if (floatingBanner) {
+                const heroSection = document.querySelector('section'); // First section (hero)
+
+                const floatingObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+                            // Hero section has been scrolled past - show floating banner
+                            floatingBanner.classList.remove('opacity-0', 'translate-y-8');
+                            floatingBanner.classList.add('opacity-100', 'translate-y-0');
+                        } else if (entry.isIntersecting) {
+                            // Hero section is visible - hide floating banner
+                            floatingBanner.classList.remove('opacity-100', 'translate-y-0');
+                            floatingBanner.classList.add('opacity-0', 'translate-y-8');
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+
+                if (heroSection) {
+                    floatingObserver.observe(heroSection);
+                }
+            }
+        });
+    </script>
+    <script>
+        // One-by-one animation for feature items
+        document.addEventListener("DOMContentLoaded", function () {
+            const featureItems = document.querySelectorAll('.feature-item');
+
+            const featuresObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Find index of this feature item
+                        const index = Array.from(featureItems).indexOf(entry.target);
+
+                        // Animate with staggered delay
+                        setTimeout(() => {
+                            entry.target.classList.remove('opacity-0', 'translate-x-8');
+                            entry.target.classList.add('opacity-100', 'translate-x-0');
+                        }, index * 300); // 300ms delay between each item
+
+                        // Stop observing once animated
+                        featuresObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            // Observe all feature items
+            featureItems.forEach(item => {
+                featuresObserver.observe(item);
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const bar = document.getElementById("buy-demo-float");
+            const hero = document.getElementById("hero");
+            const stopAt = document.getElementById("solutions"); // hide when this appears
+            const closeBtn = document.getElementById("buy-demo-close");
+
+            // Remember if user closed it during this session
+            const CLOSED_KEY = "buyDemoClosed";
+            const isClosed = sessionStorage.getItem(CLOSED_KEY) === "1";
+
+            const showBar = () => {
+                if (isClosed) return;
+                bar.classList.remove("opacity-0", "translate-y-8");
+                bar.classList.add("opacity-100", "translate-y-0");
+            };
+
+            const hideBar = () => {
+                bar.classList.remove("opacity-100", "translate-y-0");
+                bar.classList.add("opacity-0", "translate-y-8");
+            };
+
+            // 1) Show when hero scrolled past; hide when hero visible
+            const heroObserver = new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // hero in view -> hide
+                            hideBar();
+                        } else {
+                            // hero out of view -> show (unless closed)
+                            showBar();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            // 2) Also hide when we reach the next section (“stop floating on the rest of page”)
+            const stopObserver = new IntersectionObserver(
+                entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            hideBar();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            if (hero) heroObserver.observe(hero);
+            if (stopAt) stopObserver.observe(stopAt);
+
+            // Close button
+            if (closeBtn) {
+                closeBtn.addEventListener("click", () => {
+                    sessionStorage.setItem(CLOSED_KEY, "1");
+                    hideBar();
+                });
+            }
+        });
+    </script>
+
 
     <script src="./assets/js/injecting.js"></script>
 

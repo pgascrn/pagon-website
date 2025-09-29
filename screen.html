@@ -29,7 +29,9 @@
 
   <style>
     body {
-      background-color: #ffffff;
+      background: radial-gradient(circle at top right, rgba(42, 5, 7, 0.08) 0%, rgba(0, 0, 0, 0) 40%),
+        radial-gradient(circle at bottom left, rgba(237, 28, 36, 0.08) 0%, rgba(0, 0, 0, 0) 40%),
+        linear-gradient(145deg, #111111, #1A1A1A);
     }
 
     .swiper {
@@ -97,6 +99,8 @@
       transform: scale(1.05);
     }
 
+    /* Plain Flip Card    */
+    /* ------------------ */
     .flip-card {
       perspective: 1000px;
     }
@@ -121,11 +125,138 @@
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       border-radius: 1.5rem;
-      /* match Tailwind's rounded-3xl */
     }
 
     .flip-card-back {
       transform: rotateX(180deg);
+    }
+
+
+    /* --------------------------- */
+    /* Flip Showcase (Special)     */
+    /* --------------------------- */
+    #flip-showcase {
+      background: radial-gradient(circle at bottom left,
+          rgba(255, 0, 0, 0.08) 0%,
+          rgba(0, 0, 0, 0) 40%),
+        radial-gradient(circle at top right,
+          rgba(255, 0, 0, 0.08) 0%,
+          rgba(0, 0, 0, 0) 40%),
+        linear-gradient(145deg, #111111, #1a1a1a);
+      background-color: #0e0e0e;
+      /* fallback */
+    }
+
+    #flip-showcase .flip-card:hover .flip-card-front {
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.7),
+        0 0 35px rgba(59, 130, 246, 0.5);
+    }
+
+    #flip-showcase .flip-card-inner {
+      transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+
+    #flip-showcase .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* Glow accents */
+    #flip-showcase .flip-card-front::before,
+    #flip-showcase .flip-card-front::after {
+      position: absolute;
+      z-index: 2;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Top-right glow */
+    #flip-showcase .flip-card-front::before {
+      top: -80px;
+      right: -40px;
+      width: 140px;
+      height: 0px;
+      background: radial-gradient(circle at top right,
+          rgba(239, 68, 68, 0.8) 0%,
+          rgba(239, 68, 68, 0.3) 40%,
+          transparent 80%);
+    }
+
+    /* Bottom-left glow */
+    #flip-showcase .flip-card-front::after {
+      bottom: -80px;
+      left: -20px;
+      width: 120px;
+      height: 80px;
+      background: radial-gradient(circle at bottom left,
+          rgba(239, 68, 68, 0.8) 0%,
+          rgba(239, 68, 68, 0.3) 40%,
+          transparent 80%);
+    }
+
+    #flip-showcase .flip-card-front,
+    #flip-showcase .flip-card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1.5rem;
+    }
+
+    #flip-showcase .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Front styling */
+    #flip-showcase .flip-card-front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      transition: box-shadow 0.4s ease;
+    }
+
+    #flip-showcase .flip-card-front img {
+      width: 80px;
+      margin-bottom: 1.5rem;
+    }
+
+    #flip-showcase .flip-card-front h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    #flip-showcase .flip-card-front p {
+      font-size: 0.875rem;
+      color: #b0b0b0;
+    }
+
+    /* Hover glow */
+    #flip-showcase .flip-card:hover .flip-card-front {
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    }
+
+    /* Back styling */
+    #flip-showcase .flip-card-back {
+      overflow: hidden;
+      position: relative;
+    }
+
+    #flip-showcase .flip-card-back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #flip-showcase .flip-card-back::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
     }
 
     @keyframes fade-in-left {
@@ -140,8 +271,41 @@
       }
     }
 
+    @keyframes slideInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+
     .animate-fade-in-left {
       animation: fade-in-left 0.8s ease-out both;
+    }
+
+    .animate-slide-left {
+      animation: slideInLeft 1s ease forwards;
+    }
+
+    .animate-slide-right {
+      animation: slideInRight 1s ease forwards;
     }
   </style>
 </head>
@@ -182,168 +346,53 @@
         PAGON Connect makes it easy to <strong class="font-semibold">share your screen</strong> from a laptop or
         device to a large display. Ideal for interactive presentations, lessons, and meetings.
       </p>
+      <button type="submit"
+        class="px-6 py-2 mt-4 rounded-full text-white font-medium transition duration-300 bg-[#D80004]"
+        onclick="document.getElementById('solutions').scrollIntoView({behavior:'smooth'})"
+        onmouseover="this.style.background='linear-gradient(135deg, #B32B30, #8C2024)'"
+        onmouseout="this.style.background='linear-gradient(135deg, #992226, #7A1A1E)'">
+        Read More
+      </button>
     </div>
   </section>
 
-
-
-
-  <section class="bg-cover bg-center bg-no-repeat mt-24 mb-24 p-4 md:p-0 overflow-hidden">
-    <div class="flip-card max-w-7xl mx-auto w-full h-[300px] md:h-[350px]">
-      <div class="flip-card-inner w-full h-full">
-
-        <!-- Front -->
-        <div
-          class="flip-card-front bg-gradient-to-b from-slate-950 via-gray-800 to-gray-800 backdrop-blur-2xl px-6 py-16 text-center flex flex-col justify-center items-center">
-          <h3 class="text-xl md:text-xl font-semibold text-gray-100 tracking-widest mb-4">
-            Discover how PAGON Connect
-            <strong> bridges devices and displays</strong><br />
-            with unmatched simplicity and versatility
-          </h3>
-          <a href="#"
-            class="bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-gray-800 transition mt-4">
-            Coming soon
-          </a>
-        </div>
-
-        <!-- Back -->
-        <div
-          class="flip-card-back bg-gradient-to-b from-slate-900 via-slate-800 to-gray-800 backdrop-blur-2xl px-6 py-16 text-center flex flex-col justify-center items-center">
-          <h3 class="text-xl md:text-xl font-semibold text-white tracking-widest mb-4">
-            Ready to get in touch?
-          </h3>
-          <a href="contact.html"
-            class="bg-indigo-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-indigo-700 transition mt-4">
-            Contact Us
-          </a>
-        </div>
-
-      </div>
+  <section id="buy-demo-float"
+    class="buy-demo-floating fixed bottom-6 left-4 right-4 z-50 bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl opacity-0 translate-y-8 transition-all duration-700 ease-out max-w-2xl mx-auto">
+    <div class="absolute -top-4 -right-2">
+      <button id="buy-demo-close" aria-label="Close"
+        class="w-8 h-8 grid place-items-center rounded-lg border border-white/20 hover:bg-white/10">
+        ✕
+      </button>
     </div>
-  </section>
 
-    <!-- Fullscreen Hero Carousel (adjusted for navbar height) -->
-  <section class="relative w-full h-[calc(100vh-0px)]">
-    <div class="swiper heroSwiper w-full h-full">
-      <div class="swiper-wrapper">
-        <!-- Slides -->
-        <div class="swiper-slide">
-          <img src="./assets/images/new/new-31.png" alt="Hero Image 3" />
-        </div>
-        <div class="swiper-slide">
-          <img src="./assets/images/screen-page-img/school.jpg" alt="Hero Image 4" />
-        </div>
-        <div class="swiper-slide">
-          <img src="./assets/images/new/new-54.png" alt="Hero Image 4" />
-        </div>
+    <div class="flex items-center justify-between p-4 md:p-4 rounded-4xl">
 
-        <div class="swiper-slide">
-          <img src="./assets/images/new/new-11.jpg" alt="Hero Image 2" />
-        </div>
-
-        <div class="swiper-slide">
-          <img src="./assets/images/new/new-28.png" alt="Hero Image 3" />
-        </div>
-        <div class="swiper-slide">
-          <img src="./assets/images/new/new-29.png" alt="Hero Image 2" />
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <div class="overflow-x-hidden">
-    <section class="bg-gray-100 py-20">
-      <div
-        class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col-reverse md:flex-row items-center justify-between gap-12 relative">
-
-        <!-- Left Content -->
-        <div class="w-full md:w-1/2 animate-fade-in z-10">
-          <div class="flex items-center mb-4">
-            <!-- <img src="assets/images/logo/logo.png" alt="Logo" class="w-40 h-16 mr-3 object-contain"> -->
+      <div class="flex items-center space-x-3 md:space-x-4 flex-1">
+        <div class="flex-shrink-0">
+          <div
+            class="w-12 h-8 md:w-14 md:h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg border border-gray-500 flex items-center justify-center">
+            <img src="./assets/images/device/device-8.png" alt="Hero Image 2" />
           </div>
-          <h2 class="text-4xl font-bold text-gray-900 leading-tight mb-4">
-            Uses in Schools
-          </h2>
-          <p class="text-gray-600 text-lg">
-            Teachers can instantly cast lessons, videos, or documents onto the classroom screen.
-          </p>
-          <p class="text-gray-600 text-lg mt-4">
-            Use whiteboard mode to write or draw interactively during lessons.
-          </p>
-          <p class="text-gray-600 text-lg mt-4">
-            Use the clock for classroom activities, exams, and tests.
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-white text-xs md:text-sm leading-relaxed font-medium">
+            Discover how PAGON Connect bridges devices and displays
           </p>
         </div>
-
-        <!-- Right Image -->
-        <div class="w-full h-[450px] relative">
-          <img src="./assets/images/new/new-16.jpg" alt="Dashboard Screenshot"
-            class="h-[450px] object-cover transform -translate-x-16 ease-linear scroll-zoom absolute top-0 -right-40 rounded-2xl" />
-        </div>
-
       </div>
-    </section>
-  </div>
+      <div class="flex-shrink-0 ml-3">
+        <button
+          class="bg-[#D80004] hover:bg-[#B30003] text-white px-4 py-2 md:px-6 md:py-2 rounded-lg font-semibold transition-colors duration-300 text-xs md:text-sm"
+          onclick="window.location.href='contact.html'">
+          Contact Us
+        </button>
 
-
-
-  <div class="overflow-x-hidden">
-    <section class="bg-gray-100 border-2 md:border-2 border-gray-200 shadow-2xl py-20">
-      <div
-        class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col-reverse md:flex-row items-center justify-between gap-12 relative">
-
-        <!-- Right Image -->
-        <div class="w-full h-[450px] relative">
-          <img src="./assets/images/new/new-17.jpg" alt="Dashboard Screenshot"
-            class="h-[450px] object-cover transform -translate-x-16 ease-linear scroll-zoom absolute top-0  rounded-2xl " />
-        </div>
-        <!-- Left Content -->
-        <div class="w-full md:w-1/2 animate-fade-in z-10 ">
-          <div class="flex items-center mb-4">
-            <!-- <img src="./assets/images/logo/logo.png" alt="Logo" class="w-40 h-16 mr-3 object-contain"> -->
-          </div>
-          <h2 class="text-4xl font-bold text-gray-900 leading-tight mb-4">
-            Uses in Offices
-          </h2>
-          <p class="text-gray-600 text-lg">
-            Seamless presentations during meetings.
-          </p>
-          <p class="text-gray-600 text-lg mt-4">
-            Collaborative whiteboard for brainstorming sessions.
-          </p>
-        </div>
-
-
-
-      </div>
-    </section>
-  </div>
-
-  <section class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center py-24">
-    <div class="max-w-2xl w-full px-6 flex flex-col lg:flex-row items-center justify-center gap-12">
-
-      <!-- 2x2 Image Grid -->
-      <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
-        <div class="bg-gray-800 rounded-xl overflow-hidden">
-          <img src="assets/images/device/device-6.png" alt="Feature 1" class="w-full h-full object-cover" />
-        </div>
-        <div class="bg-gray-800 rounded-xl overflow-hidden">
-          <img src="assets/images/device/device-5.png" alt="Feature 2" class="w-full h-full object-cover" />
-        </div>
-        <div class="bg-gray-800 rounded-xl overflow-hidden">
-          <img src="assets/images/device/device-4.png" alt="Feature 3" class="w-full h-full object-cover" />
-        </div>
-        <div class="bg-gray-800 rounded-xl overflow-hidden">
-          <img src="assets/images/device/device-7.png" alt="Feature 4" class="w-full h-full object-cover" />
-        </div>
       </div>
     </div>
   </section>
 
 
-  <section class="relative bg-gray-100 text-white py-32 overflow-hidden">
+  <section id="solutions" class="relative bg-gray-100 text-white py-32 overflow-hidden">
 
     <!-- Background Image and Overlay -->
     <div class="relative max-w-4xl mx-auto z-10 animate-fade-in-up duration-700 ease-out">
@@ -510,8 +559,89 @@
     </div>
   </section>
 
-  <section
-    class="relative w-full bg-gradient-to-br from-[#111827] via-[#302b63] to-[#24243e] text-white py-24 overflow-hidden">
+
+  <!-- Fullscreen Hero Carousel (adjusted for navbar height) -->
+  <!-- <section class="relative w-full h-[calc(100vh-0px)]">
+    <div class="swiper heroSwiper w-full h-full">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-31.png" alt="Hero Image 3" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./assets/images/screen-page-img/school.jpg" alt="Hero Image 4" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-54.png" alt="Hero Image 4" />
+        </div>
+
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-11.jpg" alt="Hero Image 2" />
+        </div>
+
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-28.png" alt="Hero Image 3" />
+        </div>
+        <div class="swiper-slide">
+          <img src="./assets/images/new/new-29.png" alt="Hero Image 2" />
+        </div>
+
+      </div>
+    </div>
+  </section> -->
+
+
+
+  <section class="py-16 px-4 md:px-8 bg-black">
+    <div class="max-w-4xl mx-auto text-center">
+
+      <!-- Section Title -->
+      <h2 class="text-3xl md:text-4xl font-semibold text-gray-100 mb-12">
+        Our PAGON Connect Solutions
+      </h2>
+
+      <!-- Features -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-60 mb-20">
+
+        <!-- Feature 1 -->
+        <div class="card-left flex flex-col  text-center space-y-4 ">
+          <img src="./assets/images/new/new-16.jpg" alt="Compact Icon"
+            class="w-72 h-72 object-cover rounded-3xl  shadow-lg transition duration-300" />
+
+          <h3 class="text-md text-left pl-1 font-semibold text-white">Digital Signage for Education</h3>
+          <p class="text-gray-300 text-[12px] text-left max-w-xs">
+            Teachers can instantly share lessons, videos, or documents onto the classroom screen.
+          </p>
+          <p class="text-gray-300 text-[12px] text-left max-w-xs">
+            Use whiteboard mode to write or draw interactively during lessons.
+          </p>
+          <p class="text-gray-300 text-[12px] text-left max-w-xs">
+            Use the clock for classroom activities, exams, and tests.
+          </p>
+          <!-- <p class="text-gray-300 max-w-xs text-[12px]">
+                        Schedule bell times or emergency messages from one dashboard.
+                    </p>
+                     -->
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="card-right flex flex-col  space-y-4 mt-12">
+          <div class="p-2 rounded-full shadow-lg"></div>
+          <img src="./assets/images/new/new-62.png" alt="Efficient Icon"
+            class="w-72 h-72 rounded-3xl object-cover  shadow-lg transition duration-300" />
+
+          <h3 class="text-md text-left pl-1 font-semibold text-white">Corporate Communication Solutions</h3>
+          <p class="text-gray-300 max-w-xs text-left text-[12px]">
+            Seamless presentations during meetings and collaborative whiteboard for brainstorming sessions.
+          </p>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </section>
+
+
+  <section class="relative w-full  text-white py-24 bg-black overflow-hidden">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <!-- <p class="text-sm text-gray-300 mb-2">That's all. Except not.</p> -->
       <h2 class="text-3xl sm:text-4xl md:text-4xl font-bold leading-tight mb-4">
@@ -527,7 +657,7 @@
 
       <!-- Left Tilted Image -->
       <div class="z-0 transform">
-        <img src="./assets/images/screen-page-img/site-2.png" alt="Side App 1"
+        <img src="./assets/images/new/new-82.png" alt="Side App 1"
           class="w-[280px] sm:w-[320px] lg:w-[360px] shadow-xl rounded-xl border border-gray-800" />
       </div>
 
@@ -540,7 +670,7 @@
       <!-- Right Tilted Image -->
       <div class="z-0 transform">
         <img src="./assets/images/screen-page-img/site-4.png" alt="Side App 2"
-          class="w-[280px] sm:w-[320px] lg:w-[360px] shadow-xl rounded-xl border border-gray-800" />
+          class="w-[280px] sm:w-[320px] lg:w-[360px] h-[250px] shadow-xl rounded-xl border border-gray-800" />
       </div>
 
     </div>
@@ -619,6 +749,182 @@
 
     els.forEach(el => io.observe(el));
 
+  </script>
+  <script>
+    // Enhanced scroll-triggered animation
+    document.addEventListener("DOMContentLoaded", function () {
+      // For regular banner
+      const buyDemoBanner = document.querySelector('.buy-demo-banner');
+
+      // For floating banner (choose one)
+      const floatingBanner = document.querySelector('.buy-demo-floating');
+
+      if (buyDemoBanner) {
+        const buyDemoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove('opacity-0', 'translate-y-8');
+              entry.target.classList.add('opacity-100', 'translate-y-0');
+              buyDemoObserver.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -100px 0px'
+        });
+
+        buyDemoObserver.observe(buyDemoBanner);
+      }
+
+      // For floating banner - appears after scrolling past hero section
+      if (floatingBanner) {
+        const heroSection = document.querySelector('section'); // First section (hero)
+
+        const floatingObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+              // Hero section has been scrolled past - show floating banner
+              floatingBanner.classList.remove('opacity-0', 'translate-y-8');
+              floatingBanner.classList.add('opacity-100', 'translate-y-0');
+            } else if (entry.isIntersecting) {
+              // Hero section is visible - hide floating banner
+              floatingBanner.classList.remove('opacity-100', 'translate-y-0');
+              floatingBanner.classList.add('opacity-0', 'translate-y-8');
+            }
+          });
+        }, {
+          threshold: 0.1
+        });
+
+        if (heroSection) {
+          floatingObserver.observe(heroSection);
+        }
+      }
+    });
+  </script>
+  <script>
+    // One-by-one animation for feature items
+    document.addEventListener("DOMContentLoaded", function () {
+      const featureItems = document.querySelectorAll('.feature-item');
+
+      const featuresObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Find index of this feature item
+            const index = Array.from(featureItems).indexOf(entry.target);
+
+            // Animate with staggered delay
+            setTimeout(() => {
+              entry.target.classList.remove('opacity-0', 'translate-x-8');
+              entry.target.classList.add('opacity-100', 'translate-x-0');
+            }, index * 300); // 300ms delay between each item
+
+            // Stop observing once animated
+            featuresObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
+      });
+
+      // Observe all feature items
+      featureItems.forEach(item => {
+        featuresObserver.observe(item);
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const leftCard = document.querySelector(".card-left");
+      const rightCard = document.querySelector(".card-right");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (entry.target.classList.contains("card-left")) {
+                entry.target.classList.add("animate-slide-left");
+                entry.target.classList.remove("opacity-0");
+              } else if (entry.target.classList.contains("card-right")) {
+                entry.target.classList.add("animate-slide-right");
+                entry.target.classList.remove("opacity-0");
+              }
+            } else {
+              // Remove animation classes when out of view (so it can replay)
+              entry.target.classList.remove("animate-slide-left", "animate-slide-right");
+              entry.target.classList.add("opacity-0");
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(leftCard);
+      observer.observe(rightCard);
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const bar = document.getElementById("buy-demo-float");
+      const hero = document.getElementById("hero");
+      const stopAt = document.getElementById("solutions"); // hide when this appears
+      const closeBtn = document.getElementById("buy-demo-close");
+
+      // Remember if user closed it during this session
+      const CLOSED_KEY = "buyDemoClosed";
+      const isClosed = sessionStorage.getItem(CLOSED_KEY) === "1";
+
+      const showBar = () => {
+        if (isClosed) return;
+        bar.classList.remove("opacity-0", "translate-y-8");
+        bar.classList.add("opacity-100", "translate-y-0");
+      };
+
+      const hideBar = () => {
+        bar.classList.remove("opacity-100", "translate-y-0");
+        bar.classList.add("opacity-0", "translate-y-8");
+      };
+
+      // 1) Show when hero scrolled past; hide when hero visible
+      const heroObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // hero in view -> hide
+              hideBar();
+            } else {
+              // hero out of view -> show (unless closed)
+              showBar();
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      // 2) Also hide when we reach the next section (“stop floating on the rest of page”)
+      const stopObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              hideBar();
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      if (hero) heroObserver.observe(hero);
+      if (stopAt) stopObserver.observe(stopAt);
+
+      // Close button
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          sessionStorage.setItem(CLOSED_KEY, "1");
+          hideBar();
+        });
+      }
+    });
   </script>
   <script src="./assets/js/injecting.js"></script>
 </body>

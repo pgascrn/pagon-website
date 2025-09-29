@@ -4,18 +4,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <script>
-      const base = document.createElement('base');
-      base.href = window.location.hostname === '127.0.0.1' ? '/' : '/PAGON-website/';
-      document.head.appendChild(base);
-  </script> -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo/logo-2.png">
   <title>PAGON | Smart Displays</title>
+
+  <!-- libs -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/swiper@10/swiper-bundle.min.js"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- your styles & tailwind-in-browser -->
   <link rel="stylesheet" href="./assets/css/style.css">
   <script src="./assets/js/tailwind.js"></script>
   <script>
@@ -34,34 +33,88 @@
   </script>
 
   <style>
-    .swiper-slide {
-      transition: transform 0.4s ease, filter 0.4s ease;
-    }
+    /* ---------- Swiper cosmetics ---------- */
+    .swiper-slide { transition: transform .4s ease, filter .4s ease; }
+    .swiper-slide:not(.swiper-slide-active) { transform: scale(.9); filter: blur(1px); opacity: .6; }
 
-    .swiper-slide:not(.swiper-slide-active) {
-      transform: scale(0.9);
-      filter: blur(1px);
-      opacity: 0.6;
-    }
-
-
-    .animate-gradient {
-      background-size: 300% 300%;
-      animation: gradient-move 6s ease infinite;
-    }
-
+    .animate-gradient { background-size: 300% 300%; animation: gradient-move 6s ease infinite; }
     @keyframes gradient-move {
-      0% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-      50% {
-        background-position: 100% 50%;
-      }
+    /* ---------- 3D Device (desktop+mobile safe) ---------- */
+    .device-3d,
+    .device-3d__img,
+    .device-3d__shine{
+      will-change: transform;
+      transform-style: preserve-3d;
+      -webkit-transform: translateZ(0); /* iOS GPU kick */
+      backface-visibility: hidden;
+    }
 
-      100% {
-        background-position: 0% 50%;
-      }
+    .device-3d{
+      position: relative;
+      width: 16rem;           /* default width; overridden by Tailwind classes you add */
+      aspect-ratio: 1.45/1;   /* keep height stable before image loads */
+      perspective: 1000px;
+      animation: device-float 6s ease-in-out infinite; /* subtle idle float */
+    }
+    @keyframes device-float {
+      0%,100% { transform: translateY(0) }
+      50% { transform: translateY(-6px) }
+    }
+
+    .device-3d__img{
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: contain;
+      transform: rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(24px);
+      transition: transform 120ms ease, filter 200ms ease;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,.45));
+    }
+
+    .device-3d::after{
+      content:"";
+      position:absolute; left:8%; right:8%; bottom:-18px; height:28px;
+      background: radial-gradient(50% 100% at 50% 0%, rgba(0,0,0,.35), transparent 70%);
+      filter: blur(4px);
+    }
+
+    .device-3d__shine{
+      pointer-events:none;
+      position:absolute; inset:-2%;
+      mix-blend-mode: screen;          /* looks great on desktop */
+      transform: translateZ(26px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+      transition: opacity 200ms ease;
+      opacity:.85;
+    }
+
+    .device-3d.is-out .device-3d__img,
+    .device-3d.is-out .device-3d__shine{
+      transform: rotateX(0deg) rotateY(0deg) translateZ(24px);
+    }
+
+    /* ----- Intro spin (one-time, smooth back to start) ----- */
+    @keyframes spin3d {
+      0%   { transform: rotateX(0deg) rotateY(0deg) translateZ(24px); }
+      30%  { transform: rotateX(-10deg) rotateY(-18deg) translateZ(24px); }
+      70%  { transform: rotateX( 10deg) rotateY( 18deg) translateZ(24px); }
+      100% { transform: rotateX(0deg) rotateY(0deg) translateZ(24px); }
+    }
+    .device-3d__img.spin-on-load { animation: spin3d 5s ease-in-out; }
+
+    /* ----- Mobile-safe light loop (if no hover) ----- */
+    @keyframes spinLoopMobile {
+      0%   { transform: rotateX(-6deg) rotateY(-12deg) translateZ(12px); }
+      50%  { transform: rotateX( 6deg) rotateY( 12deg) translateZ(12px); }
+      100% { transform: rotateX(-6deg) rotateY(-12deg) translateZ(12px); }
+    }
+
+    /* Touch devices: cheaper rendering + no blend-mode glitches */
+    @media (hover: none) and (pointer: coarse){
+      .device-3d__shine{ mix-blend-mode: normal; opacity:.35; }
+      .device-3d__img{ transform: rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(12px); }
     }
   </style>
 </head>
@@ -69,305 +122,299 @@
 <body class="text-white font-sans bg-black">
   <!-- Header -->
   <div data-include="./components/header.html"></div>
+
   <div class="w-full mx-auto px-4 min-h-screen relative">
-
-    <div class="absolute inset-0 bg-[url('https://jooinn.com/images/blue-light-effect-1.png')] bg-center bg-cover z-0"
-      data-aos="fade-down" data-aos-easing="linear" data-aos-duration="2000">
-    </div>
-
-    <!-- Blur overlay -->
+    <div class="absolute inset-0 bg-black bg-center bg-cover z-0"
+         data-aos="fade-down" data-aos-easing="linear" data-aos-duration="2000"></div>
     <div class="absolute inset-0 backdrop-blur-sm bg-transparent/70 z-10"></div>
 
-    <!-- Hero Section -->
-    <section class="relative w-full flex flex-col items-center justify-center text-center pt-60 md:pt-36 pb-12 z-20 ">
-
-      <div
-        class="absolute top-[-360px] sm:top-[-400px] md:top-[-700px] left-0 flex items-center justify-center w-full z-0 pointer-events-none ">
-        <!-- Elliptical Gradient Glow (Desktop only) -->
-        <div class="
-                              w-[400px] sm:w-[600px] md:w-[800px]
-                              h-[300px] sm:h-[400px] md:h-[500px]
-                              rounded-full blur-[120px] sm:blur-[160px] md:blur-[200px]
-                              opacity-40 sm:opacity-50 md:opacity-100
-                              bg-[radial-gradient(circle_at_center,_#4361EE,_#00B4D8,_transparent)]"
-          data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
-        </div>
+    <!-- Hero -->
+    <section class="relative w-full flex flex-col items-center justify-center text-center pt-40 md:pt-24 md:pb-12 z-20">
+      <div class="absolute top-[-360px] sm:top-[-400px] md:top-[-700px] left-0 flex items-center justify-center w-full z-0 pointer-events-none">
+        <div class="w-[400px] sm:w-[600px] md:w-[800px] h-[300px] sm:h-[400px] md:h-[500px]
+                    rounded-full blur-[120px] sm:blur-[160px] md:blur-[200px]
+                    opacity-40 sm:opacity-50 md:opacity-100
+                    bg-[radial-gradient(circle_at_center,_#D80004,_#EE4346,_transparent)]"
+             data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000"></div>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl md:text-8xl font-thin leading-tight
-            bg-[radial-gradient(circle_at_center,_#fff,#333232)] bg-clip-text text-transparent pb-4">
-        <span class="bg-gradient-to-r from-primary via-teal-400 to-cyanish
-                       bg-clip-text text-transparent animate-gradient italic">PAGON</span><br> Display Technology
-        Elevated.
+      <h1 class="text-3xl sm:text-4xl md:text-8xl leading-tight
+                 bg-[radial-gradient(circle_at_center,_#fff,#333232)] bg-clip-text text-transparent pb-4">
+        <span class="">PAGON</span><br>
+        <span class=" font-thin">Display Technology Elevated.</span>
       </h1>
-      <img src="./assets/images/device/device-show.png " alt="Pagon Device" class="w-64 sm:w-72 md:w-[380px] mt-4" />
 
-      <label class="mt-20">We deliver edge-ready hardware across the globe. Don’t see what you need? We’ll design it
-        just for you.</label>
-      <div class="flex items-center flex-col md:flex-row gap-6 mt-6">
-        <a class="text-blue-600" href="./signage.html">Explore Our Signage Products <i
-            class="fa-solid fa-arrow-right fa-fade ms-3"></i></a>
-        <a class="text-blue-600" href="./screen.html">Discover PAGON Connect <i
-            class="fa-solid fa-arrow-right fa-fade ms-3"></i></a>
+      <!-- 3D Device (responsive widths) -->
+      <div id="pagon-3d" class="device-3d w-64 sm:w-72 md:w-[380px] lg:w-[520px] mt-4">
+        <img src="./assets/images/device/device-show.png" alt="Pagon Device" class="device-3d__img" loading="eager" />
+        <span class="device-3d__shine" aria-hidden="true"></span>
       </div>
 
+      <label class="mt-12 md:mt-20">We deliver edge-ready hardware across the globe. Don’t see what you need? We’ll design it just for you.</label>
+      <div class="flex items-center flex-col md:flex-row gap-6 mt-6">
+        <a class="" href="./signage.html">Explore Our Signage Products <i class="fa-solid fa-arrow-right fa-fade ms-3"></i></a>
+        <a class="" href="./screen.html">Discover PAGON Connect <i class="fa-solid fa-arrow-right fa-fade ms-3"></i></a>
+      </div>
 
-      <div class="mt-14 border-t border-b border-gray-900 w-full px-28 hidden lg:block">
+      <div class="mt-14 border-t border-b border-gray-900 w-full px-4 lg:px-28 hidden md:block lg:block">
         <div class="grid grid-cols-1 lg:grid-cols-3 py-8 gap-6">
-
           <div class="flex items-start gap-3 border-e border-gray-900 px-2">
             <img src="./assets/images/centralized.png" class="w-12" />
             <div class="flex flex-col">
               <label class="text-start">Centralised System</label>
-              <label class="text-xs font-thin text-start mt-2 text-gray-400">Centralised Command. Simplified Operations.
-                Control Every Display from a Single Dashboard</label>
+              <label class="text-xs font-thin text-start mt-2 text-gray-400">Centralised Command. Simplified Operations. Control Every Display from a Single Dashboard</label>
             </div>
           </div>
-
           <div class="flex items-start gap-3 border-e border-gray-900 px-2">
             <img src="./assets/images/customer-support.png" class="w-12" />
             <div class="flex flex-col">
               <label class="text-start">Support Center</label>
-              <label class="text-xs font-thin text-start mt-2 text-gray-400">End-to-end support with a personal touch.
-                Get the help you need-on time, every time</label>
+              <label class="text-xs font-thin text-start mt-2 text-gray-400">End-to-end support with a personal touch. Get the help you need—on time, every time</label>
             </div>
           </div>
-
           <div class="flex items-start gap-3">
             <img src="./assets/images/centralized.png" class="w-12" />
             <div class="flex flex-col">
               <label class="text-start">Trusted</label>
-              <label class="text-xs font-thin text-start mt-2 text-gray-400">Backed by Trust. Powered by Technology.
-                Proven Solutions for Mission-Critical Environments</label>
+              <label class="text-xs font-thin text-start mt-2 text-gray-400">Backed by Trust. Powered by Technology. Proven Solutions for Mission-Critical Environments</label>
             </div>
           </div>
-
-
         </div>
       </div>
-
     </section>
   </div>
 
+  <!-- About -->
   <section id="about" class="relative min-h-screen flex justify-center text-gray-950 px-4 md:px-8 py-20 bg-[#f7f7f8]">
-    <!-- Content -->
     <div class="relative z-10 max-w-[1280px] w-full">
-      <div
-        class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-28 mt-8 text-center lg:text-left">
-
-        <!-- Device Image -->
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-28 mt-8 text-center lg:text-left">
         <img class="w-full max-w-[450px]" src="./assets/images/device/device.png" alt="Main Device" />
-
-        <!-- Text Content -->
         <div class="flex flex-col mt-8 lg:mt-0">
           <h2 class="text-3xl md:text-4xl font-bold mb-4 text-start">Who We Are</h2>
           <p class="text-sm md:text-base leading-relaxed text-gray-800 text-start">
-            PAGON is a technology company focused on creating smart, reliable hardware solutions that simplify
-            connectivity and
-            performance. We specialise in compact embedded systems and edge computing, delivering products that are
-            intuitive,
-            scalable, and built to last. Our mission is to make advanced technology more accessible and practical for
-            real-world
-            applications in education, business, and everyday innovation.
+            PAGON is a technology company focused on creating smart, reliable hardware solutions that simplify connectivity and performance...
           </p>
 
-          <!-- Device Gallery -->
           <div class="flex flex-col sm:flex-row items-center gap-6 mt-10">
-            <div
-              class="w-[150px] h-[160px] rounded-2xl px-4 object-cover flex justify-center items-center shadow hover:-translate-y-2 duration-500 ease-in-out">
+            <div class="w-[150px] h-[160px] rounded-2xl px-4 flex justify-center items-center shadow hover:-translate-y-2 duration-500 ease-in-out">
               <img src="./assets/images/device/device.png" alt="Device 1" />
             </div>
-            <div
-              class="w-[150px] h-[160px] rounded-2xl px-4 object-cover flex justify-center items-center shadow hover:-translate-y-2 duration-500 ease-in-out">
+            <div class="w-[150px] h-[160px] rounded-2xl px-4 flex justify-center items-center shadow hover:-translate-y-2 duration-500 ease-in-out">
               <img src="./assets/images/device/device-show.png" alt="Device 2" />
             </div>
-            <div
-              class="w-[150px] h-[160px] rounded-2xl px-4 object-cover flex justify-center items-center shadow hover:-translate-y-2 duration-500 ease-in-out">
+            <div class="w-[150px] h-[160px] rounded-2xl px-4 flex justify-center items-center shadow hover:-translate-y-2 duration-500 ease-in-out">
               <img src="./assets/images/device/device.png" alt="Device 3" />
             </div>
           </div>
 
-          <!-- Footer Text -->
-          <label class="mt-16 text-2xl md:text-3xl font-semibold text-start">Your Trusted Digital Display
-            Partner</label>
-          <label class="mt-3 text-xs text-gray-400 text-start">
-            We help you connect, manage, and display content with ease. From classrooms to commercial spaces, our
-            solutions are designed for impact and reliability.
-          </label>
+          <label class="mt-16 text-2xl md:text-3xl font-semibold text-start">Your Trusted Digital Display Partner</label>
+          <label class="mt-3 text-xs text-gray-400 text-start">We help you connect, manage, and display content with ease...</label>
         </div>
       </div>
     </div>
   </section>
 
-
-  <!-- What we do Section -->
-
-  <section id="what-we-do" class="bg-black text-white w-full px-4 py-16">
+  <!-- What we do -->
+   <section id="what-we-do" class="bg-black text-white w-full px-4 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">What We Do</h2>
       <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-        PAGON delivers smart, affordable digital signage solutions. We're also launching a wireless screen sharing
-        system designed for classrooms and meetings - making it easier to connect, present, and collaborate.
+        PAGON delivers smart, affordable digital signage solutions...
       </p>
 
-      <!-- Swiper Carousel -->
       <div class="swiper mySwiper md:w-[760px] lg:w-[960px] h-[460px]">
         <div class="swiper-wrapper">
-
-          <!-- Slide 1 -->
           <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
-            <img src="./assets/images/screen-page-img/ctp-2.png" alt="AI Cloud" class="w-full h-full object-cover" />
+            <img src="./assets/images/carousal.png" alt="Campus" class="w-full h-full object-cover" />
             <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
-              <p class="text-sm leading-snug text-white">
-                Displays campus news and maps via signage for student engagement.
-              </p>
-              <!-- <span class="text-sm font-semibold mt-3 inline-block">More</span> -->
-            </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <!-- <div class="swiper-slide relative w-[260px] h-[400px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
-            <img
-              src="https://datacom.com/content/dam/images/admin/solution-landing-pages/customer-experience/digital-signage-page/DigitalSignage_PromoImage_624x400px@2x.jpg"
-              alt="Working" class="w-full h-full object-cover" />
-            <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
-              <p class="text-sm leading-snug text-white">
-                Schedule promotions and urgent updates for restaurants and shops.
-              </p> -->
-          <!-- <span class="text-sm font-semibold mt-3 inline-block">More</span> -->
-          <!-- </div>
-          </div> -->
-
-          <!-- Slide 3 -->
-          <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
-            <img src="/assets/images/new/new-61.png" alt="Control Room" class="w-full h-full object-cover" />
-            <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
-              <p class="text-sm leading-snug text-white">
-                Share emergency notices and alerts.
-              </p>
-              <!-- <span class="text-sm font-semibold mt-3 inline-block">More</span> -->
+              <p class="text-sm leading-snug text-white">Displays campus news and maps via signage...</p>
             </div>
           </div>
 
           <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
-            <img
-              src="https://www.crowntv-us.com/wp-content/uploads/2025/05/AD_4nXfA5WlbzHK2yR6s7yj5-5CFOf0s5KhqGVeFL8pFA_WZMHHnmk1DThV6RAsOaECb8hJrILeLxkbkBVeOtGS8qUtcqNwuMlI1K4tCfpmZNB3yY4f3XDwWqXbtnkttIs_kULrpjI-Hkg.jpg"
-              alt="Control Room" class="w-full h-full object-cover" />
+            <img src="/assets/images/new/new-63.png" alt="Alerts" class="w-full h-full object-cover" />
             <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
-              <p class="text-sm leading-snug text-white">
-                Share news and important messages.
-              </p>
-              <!-- <span class="text-sm font-semibold mt-3 inline-block">More</span> -->
+              <p class="text-sm leading-snug text-white">Share emergency notices and alerts.</p>
             </div>
           </div>
 
           <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
-            <img src="/assets/images/new/new-18.jpg" alt="Control Room" class="w-full h-full object-left" />
+            <img src="/assets/images/new/new-65.png" alt="News" class="w-full h-full object-cover" />
             <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
-              <p class="text-sm leading-snug text-white">
-                Display time tables and calander events.
-              </p>
-              <!-- <span class="text-sm font-semibold mt-3 inline-block">More</span> -->
-            </div>
-          </div>
-          <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
-            <img src="/assets/images/new/new-54.png" alt="Control Room" class="w-full h-full object-left" />
-            <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
-              <p class="text-sm leading-snug text-white">
-                Showcase product features or live data for internal displays.
-              </p>
-              <!-- <span class="text-sm font-semibold mt-3 inline-block">More</span> -->
+              <p class="text-sm leading-snug text-white">Share news and important messages.</p>
             </div>
           </div>
 
+          <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
+            <img src="/assets/images/new/new-64.png" alt="Timetables" class="w-full h-full object-left" />
+            <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
+              <p class="text-sm leading-snug text-white">Display time tables and calendar events.</p>
+            </div>
+          </div>
+
+          <div class="swiper-slide relative w-[260px] h-[380px] rounded-3xl overflow-hidden bg-white/5 shadow-lg">
+            <img src="/assets/images/new/new-62.png" alt="Products" class="w-full h-full object-left" />
+            <div class="absolute bottom-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5 w-full">
+              <p class="text-sm leading-snug text-white">Showcase product features or live data.</p>
+            </div>
+          </div>
         </div>
         <div class="swiper-pagination"></div>
       </div>
     </div>
-  </section>
+  </section> 
 
+
+   
+  <!-- Video CTA -->
   <section class="relative w-full min-h-screen bg-black text-white overflow-hidden mt-16">
-
-    <!-- Video Background -->
     <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover opacity-60 z-10">
       <source src="./assets/video/banner-board.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
     </video>
-
-    <!-- Dark Overlay -->
     <div class="absolute inset-0 bg-black/40 md:bg-black/70 z-20"></div>
-
-    <!-- Gradient Overlay -->
     <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black z-30"></div>
 
-    <!-- Content -->
     <div class="relative z-40 flex flex-col items-center justify-center min-h-screen px-4 text-center">
-
-      <!-- Subheadings -->
-      <p class="text-sm sm:text-base text-white/80 leading-tight">
-        <span class="font-semibold text-white">Your message</span> deserves more than static screens.
-      </p>
-      <p class="text-sm sm:text-base mt-1 text-white/80">
-        <!-- Connect With PAGON Now.
-    </p> -->
-        <!-- Heading -->
+      <p class="text-sm sm:text-base text-white/80 leading-tight"><span class="font-semibold text-white">Your message</span> deserves more than static screens.</p>
       <h1 class="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-        Connect with Pagon<br class="sm:hidden" />
-        now.
+        Connect with Pagon<br class="sm:hidden" /> now.
       </h1>
-
-      <!-- Call to Action -->
-      <button
-        class="mt-6 px-12 py-2 rounded-full border border-white/30 bg-white/20 text-white font-semibold hover:bg-white/30 transition-all text-sm sm:text-base backdrop-blur-md shadow">
+      <button class="mt-6 px-12 py-2 rounded-full border border-white/30 bg-white/20 text-white font-semibold hover:bg-white/30 transition-all text-sm sm:text-base backdrop-blur-md shadow">
         Buy
       </button>
     </div>
   </section>
 
-
   <!-- Footer -->
   <div data-include="./components/footer.html"></div>
 
-
-
-
-
-
-
+  <!-- libs -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
-
+  <!-- Swiper init -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const swiper = new Swiper(".mySwiper", {
+      new Swiper(".mySwiper", {
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: "auto",
         loop: true,
-        centeredSlides: true,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-        },
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
+        autoplay: { delay: 5000, disableOnInteraction: false },
+        pagination: { el: ".swiper-pagination", clickable: true },
       });
     });
-
   </script>
 
+  <!-- 3D Device logic (desktop hover tilt + mobile-safe loop + intro spin) -->
+  <script>
+    (function () {
+      const el = document.getElementById('pagon-3d');
+      if (!el) return;
+      const img = el.querySelector('.device-3d__img');
+      const shine = el.querySelector('.device-3d__shine');
 
+      // ensure image visible asap
+      img.setAttribute('loading', 'eager');
+
+      // intro spin once, then remove class
+      function startIntro() {
+        img.classList.add('spin-on-load');
+        img.addEventListener('animationend', () => img.classList.remove('spin-on-load'), { once: true });
+      }
+      if (!img.complete) img.addEventListener('load', startIntro, { once: true });
+      else startIntro();
+
+      const canHover = matchMedia('(hover: hover)').matches && matchMedia('(pointer: fine)').matches;
+
+      if (canHover) {
+        // Desktop pointer tilt
+        const MAX_TILT = 14;  // degrees
+        const MAX_LIFT = 10;  // px
+        let raf, isPointerDown = false;
+
+        function setVars(rx, ry, sx, sy, lift = 0) {
+          el.style.setProperty('--rx', rx + 'deg');
+          el.style.setProperty('--ry', ry + 'deg');
+          el.style.setProperty('--sx', sx + '%');
+          el.style.setProperty('--sy', sy + '%');
+          const z = 24 + lift;
+          img.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(${z}px)`;
+          shine.style.transform = `translateZ(${z + 2}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        }
+
+        function handle(pos) {
+          const r = el.getBoundingClientRect();
+          const x = (pos.clientX - r.left) / r.width;   // 0..1
+          const y = (pos.clientY - r.top) / r.height;   // 0..1
+          const ry = (x - 0.5) * (MAX_TILT * 2);
+          const rx = -(y - 0.5) * (MAX_TILT * 2);
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            setVars(rx, ry, x * 100, y * 100, MAX_LIFT * (isPointerDown ? 1 : 0.6));
+            el.classList.remove('is-out');
+          });
+        }
+
+        function leave() {
+          el.classList.add('is-out');
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => setVars(0, 0, 50, 0, 0));
+        }
+
+        el.addEventListener('pointermove', e => { isPointerDown = e.pressure > 0; handle(e); });
+        el.addEventListener('pointerdown', e => { isPointerDown = true; handle(e); });
+        el.addEventListener('pointerup',   () => { isPointerDown = false; });
+        el.addEventListener('pointerleave', leave);
+
+        // accessibility
+        el.tabIndex = 0;
+        el.addEventListener('focus', () => setVars(-2, 2, 60, 10, MAX_LIFT * 0.5));
+        el.addEventListener('blur',  leave);
+
+      } else {
+        // Touch devices: light continuous loop for stability/perf
+        img.style.animation = 'spinLoopMobile 7s ease-in-out infinite';
+      }
+    })();
+  </script>
+<script>
+    const swiper = new Swiper(".featureSwiper", {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        640: { slidesPerView: 1.5 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+    });
+  </script>
+    <script>
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    els.forEach(el => io.observe(el));
+
+  </script>
   <script>
     AOS.init();
   </script>
-
   <script src="./assets/js/injecting.js"></script>
-
 </body>
-
-
-
 </html>
