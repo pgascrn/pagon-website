@@ -53,83 +53,133 @@
   <div data-include="./components/header.html"></div>
 
   <!-- Contact Hero -->
-  <section class=" pb-20 pt-40 px-6 md:mt-0 -mt-80">
-    <div class="max-w-7xl mx-auto text-center mb-12 md:mt-0 mt-80">
-      <h3 class="text-xl sm:text-3xl md:text-4xl font-semibold text-gray-100 tracking-widest mb-2">Your message deserves
+  <section class="pb-16 pt-32 px-6">
+    <div class="max-w-7xl mx-auto text-center mb-10">
+      <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold text-gray-300 tracking-wider mb-2">Your message deserves
         more than static screens.</h3>
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-100 mb-4">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
         Connect with Pagon now.
       </h2>
-      <p class="text-gray-200 text-base sm:text-lg">
+      <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
         Reach out to our team and we’ll get back to you within 24 hours.
       </p>
     </div>
 
-    <div class="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-10">
-      <div class="w-full h-[600px] rounded-[3rem] overflow-hidden">
-        <img src="assets/images/ContactUs1.png" alt="Promo" class="w-full h-full object-cover" />
-      </div>
+    <div
+      class="max-w-6xl mx-auto rounded-[2.5rem] overflow-hidden shadow-2xl border border-[#2B2B2B] h-[350px] sm:h-[450px] md:h-[500px]">
+      <img src="assets/images/ContactUs1.png" alt="Promo" class="w-full h-full object-cover" />
     </div>
   </section>
 
+  <!-- Contact Form & Info Section -->
+  <section class="w-full pb-24 pt-6 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
+      <!-- Left Column: Direct Contact Info & Email Card -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="backdrop-blur-lg bg-black/40 rounded-3xl p-8 border border-[#2B2B2B] shadow-lg">
+          <h3 class="text-xl font-bold text-white mb-3">Get in Touch Directly</h3>
+          <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+            Have questions about our smart display hardware or custom signage systems? Reach out to us via email or drop
+            a message.
+          </p>
 
-  <section class="w-full py-20 px-4">
-    <div class="max-w-xl mx-auto">
-      <div class="backdrop-blur-lg bg-black/40 rounded-3xl p-10 border border-[#2B2B2B] shadow-lg">
-        <h2 class="text-2xl font-bold text-center mb-2 text-white">Contact Us</h2>
-        <p class="text-center text-gray-400 mb-8">We’d love to hear from you. Fill out the form below.</p>
+          <div class="space-y-4">
+            <!-- Email Item with info@pagon.com.au -->
+            <a href="mailto:info@pagon.com.au"
+              class="flex items-center gap-4 p-4 rounded-2xl bg-[#141414] border border-[#2B2B2B] hover:border-[#992226] transition group">
+              <div
+                class="w-10 h-10 rounded-xl bg-[#992226]/20 flex items-center justify-center text-[#992226] group-hover:bg-[#992226] group-hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <span class="block text-xs text-gray-400 font-medium">Email Us</span>
+                <span
+                  class="text-white font-semibold text-sm sm:text-base group-hover:text-red-400 transition">info@pagon.com.au</span>
+              </div>
+            </a>
 
-        <form id="contact-form" class="space-y-6">
-          <div>
-            <label for="from_name" class="block mb-1 text-sm font-semibold text-white">Name</label>
-            <input type="text" name="from_name" placeholder="Your name"
-              class="w-full px-4 py-2 rounded-md bg-[#1A1A1A]/80 text-white border border-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#323030] focus:border-[#181616] transition"
-              required />
+            <!-- Support Info Card -->
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-[#141414] border border-[#2B2B2B]">
+              <div class="w-10 h-10 rounded-xl bg-gray-800 flex items-center justify-center text-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <span class="block text-xs text-gray-400 font-medium">Response Time</span>
+                <span class="text-white font-semibold text-sm sm:text-base">Within 24 Hours</span>
+              </div>
+            </div>
           </div>
-          <div>
-            <label for="from_email" class="block mb-1 text-sm font-semibold text-white">Email</label>
-            <input type="email" name="from_email" placeholder="you@example.com"
-              class="w-full px-4 py-2 rounded-md bg-[#1A1A1A]/80 text-white border border-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#323030] focus:border-[#181616]  transition"
-              required />
-          </div>
-          <div>
-            <label for="message" class="block mb-1 text-sm font-semibold text-white">Message</label>
-            <textarea name="message" rows="4" placeholder="Your message here..."
-              class="w-full px-4 py-2 rounded-md bg-[#1A1A1A]/80 text-white border border-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#323030] focus:border-[#181616]  transition"
-              required></textarea>
-          </div>
-          <div class="text-center pt-4">
-            <button type="submit" class="px-6 py-2 rounded-full text-white font-medium transition duration-300" style="background: linear-gradient(135deg, #992226, #7A1A1E);
-           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);"
-              onmouseover="this.style.background='linear-gradient(135deg, #B32B30, #8C2024)'"
-              onmouseout="this.style.background='linear-gradient(135deg, #992226, #7A1A1E)'">
-              Send Message
-            </button>
-
-
-          </div>
-        </form>
+        </div>
       </div>
+
+      <!-- Right Column: Contact Form -->
+      <div class="lg:col-span-7">
+        <div class="backdrop-blur-lg bg-black/40 rounded-3xl p-8 sm:p-10 border border-[#2B2B2B] shadow-lg">
+          <h2 class="text-2xl font-bold text-white mb-2">Send us a Message</h2>
+          <p class="text-gray-400 text-sm mb-8">Fill out the form below and our team will get back to you promptly.</p>
+
+          <form id="contact-form" class="space-y-5">
+            <div>
+              <label for="from_name" class="block mb-1.5 text-sm font-semibold text-white">Name</label>
+              <input type="text" name="from_name" placeholder="Your name"
+                class="w-full px-4 py-3 rounded-xl bg-[#1A1A1A]/80 text-white border border-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#992226] focus:border-transparent transition text-sm"
+                required />
+            </div>
+            <div>
+              <label for="from_email" class="block mb-1.5 text-sm font-semibold text-white">Email</label>
+              <input type="email" name="from_email" placeholder="you@example.com"
+                class="w-full px-4 py-3 rounded-xl bg-[#1A1A1A]/80 text-white border border-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#992226] focus:border-transparent transition text-sm"
+                required />
+            </div>
+            <div>
+              <label for="message" class="block mb-1.5 text-sm font-semibold text-white">Message</label>
+              <textarea name="message" rows="4" placeholder="Your message here..."
+                class="w-full px-4 py-3 rounded-xl bg-[#1A1A1A]/80 text-white border border-[#2B2B2B] focus:outline-none focus:ring-2 focus:ring-[#992226] focus:border-transparent transition text-sm resize-none"
+                required></textarea>
+            </div>
+            <div class="pt-2">
+              <button type="submit"
+                class="w-full py-3.5 px-6 rounded-xl text-white font-medium transition duration-300 shadow-lg text-sm sm:text-base flex items-center justify-center gap-2"
+                style="background: linear-gradient(135deg, #992226, #7A1A1E); box-shadow: 0 4px 12px rgba(153, 34, 38, 0.3);"
+                onmouseover="this.style.background='linear-gradient(135deg, #B32B30, #8C2024)'"
+                onmouseout="this.style.background='linear-gradient(135deg, #992226, #7A1A1E)'">
+                <span>Send Message</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
     </div>
   </section>
-
-
-
 
   <!-- Success Toast -->
   <div id="toast-success"
-    class="fixed bottom-6 right-6 bg-green-600 text-white px-4 py-2 rounded shadow-md hidden transition duration-300">
+    class="fixed bottom-6 right-6 bg-green-600 text-white px-5 py-3 rounded-xl shadow-xl hidden transition duration-300 text-sm font-medium z-50 flex items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
     Message sent successfully!
   </div>
 
   <!-- Footer -->
   <div data-include="./components/footer.html"></div>
 
-
   <!-- JS Includes -->
   <script>
-
     const form = document.getElementById("contact-form");
     const toast = document.getElementById("toast-success");
 
